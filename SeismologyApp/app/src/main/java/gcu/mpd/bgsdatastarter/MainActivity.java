@@ -29,7 +29,7 @@ import java.net.URLConnection;
 
 import gcu.mpd.bgsdatastarter.R;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener
+public class MainActivity extends AppCompatActivity implements OnClickListener, MainActivityView
 {
     private TextView rawDataDisplay;
     private Button startButton;
@@ -60,6 +60,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // Run network access on a separate thread;
         new Thread(new Task(urlSource)).start();
     } //
+
+    @Override
+    public void displayEarthquakes() {
+
+    }
 
     // Need separate thread to access the internet resource over network
     // Other neater solutions should be adopted in later iterations.

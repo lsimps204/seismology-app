@@ -11,9 +11,10 @@ public class EarthquakeCollection
         return this.earthquakes;
     }
 
-    public List<Earthquake> getEarthquakesByCounty(String county) {
-        return this.earthquakes.stream()
-            .filter(quake -> quake.getLocation().getCounty().equalsIgnoreCase(county))
-            .collect(Collectors.toList());
-    }
+//    public List<Earthquake> getEarthquakesByCounty(String county) {
+//        return this.earthquakes.stream()
+//            .filter(quake -> quake.getLocation().getCounty().equalsIgnoreCase(county))
+//            .collect(Collectors.toList());
+//    }
+
 }

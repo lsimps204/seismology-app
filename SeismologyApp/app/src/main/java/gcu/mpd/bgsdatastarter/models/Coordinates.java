@@ -26,6 +26,7 @@ public class Coordinates {
         this.lon = lon;
     }
 
+    @Override
     public String toString() {
         return this.lat + ", " + this.lon;
     }

@@ -37,6 +37,8 @@ public class Location {
         this.coordinates = coordinates;
     }
 
+
+    @Override
     public String toString() {
         return this.town + ", " + this.county + " (" + this.coordinates + ")";
     }

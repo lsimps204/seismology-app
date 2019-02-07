@@ -6,7 +6,7 @@ public class Earthquake
     private String title;
     private String link;
     private String category;
-    private Date pubDate;
+    //private Date pubDate;
     private Location location;
     private float depth;
     private float magnitude;
@@ -39,13 +39,13 @@ public class Earthquake
         this.category = category;
     }
 
-    public Date getPubDate() {
-        return pubDate;
-    }
-
-    public void setPubDate(Date pubDate) {
-        this.pubDate = pubDate;
-    }
+//    public Date getPubDate() {
+//        return pubDate;
+//    }
+//
+//    public void setPubDate(Date pubDate) {
+//        this.pubDate = pubDate;
+//    }
 
     public Location getLocation() {
         return location;

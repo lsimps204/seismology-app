@@ -1,6 +1,7 @@
 package gcu.mpd.bgsdatastarter.models;
 
-import java.util.List
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EarthquakeCollection 
 {
@@ -12,7 +13,7 @@ public class EarthquakeCollection
 
     public List<Earthquake> getEarthquakesByCounty(String county) {
         return this.earthquakes.stream()
-            .filter(quake -> quake.location.county.equalsIgnoreCase(county))
-            .collect(Collectors.toList())
+            .filter(quake -> quake.getLocation().getCounty().equalsIgnoreCase(county))
+            .collect(Collectors.toList());
     }
 }

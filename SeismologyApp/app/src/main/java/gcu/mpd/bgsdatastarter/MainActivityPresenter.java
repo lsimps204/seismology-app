@@ -19,7 +19,7 @@ public class MainActivityPresenter {
 
 
     public void loadEarthquakes() {
-        List<Earthquake> quakes = earthquakeRepository.getBooks();
+        List<Earthquake> quakes = earthquakeRepository.getEarthquakes();
         // call view method
     }
 }

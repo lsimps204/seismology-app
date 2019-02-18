@@ -21,17 +21,24 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawDataDisplay;
     private Button startButton;
-    private String result;
+    private String result = "";
     private String url1="";
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
 
@@ -73,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         @Override
         public void run()
         {
-
             URL aurl;
             URLConnection yc;
             BufferedReader in = null;
@@ -87,28 +93,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 Log.e("MyTag","in try");
                 aurl = new URL(url);
                 yc = aurl.openConnection();
+
                 in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                //
-                // Throw away the first 2 header lines before parsing
-                //
-                //
-                //
+
+                // Skip first two lines (XML metadata)
+                for (int i=0; i < 2; i++) {
+                    in.readLine();
+                }
+
                 while ((inputLine = in.readLine()) != null)
                 {
-                    result = result + inputLine;
-                    Log.e("MyTag",inputLine);
-
+                    if (!inputLine.equals("</rss>")) // bit of a hack
+                        result = result + inputLine;
                 }
                 in.close();
             }
             catch (IOException ae)
             {
-                Log.e("MyTag", "ioexception");
+                Log.e("MyTag", ae.toString());
             }
 
             //
             // Now that you have the xml data you can parse it
             //
+
+            EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
+            xmlParser.parse();
 
             // Now update the TextView to display raw XML data
             // Probably not the best way to update TextView

@@ -9,6 +9,9 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import gcu.mpd.bgsdatastarter.models.FeedMetadata;
 
@@ -23,11 +26,13 @@ public class EarthquakeXmlParser {
         this.xml = xml;
     }
 
+    /* Master method for parsing the XML string
+    *  Calls submethods to do the processing and return domain objects */
     public void parse() {
         this.setupParser();
 
         if (this.xpp != null) {
-            this.buildMetaData();
+            FeedMetadata feedbackMetadata = this.buildMetaData();
             this.buildEarthquakes();
         }
     }
@@ -56,11 +61,11 @@ public class EarthquakeXmlParser {
         }
     }
 
-    private void buildMetaData() {
+    private FeedMetadata buildMetaData() {
         String title = "";
         String link = "";
         String description = "";
-        String lastDate = "";
+        LocalDateTime lastDate = null;
 
         while (this.xpp.getName() == null) {
             this.toNextEvent();
@@ -84,7 +89,9 @@ public class EarthquakeXmlParser {
                             if (description.equals("")) description = this.xpp.getText();
                             break;
                         case "lastBuildDate":
-                            if (lastDate.equals("")) lastDate = this.xpp.getText();
+                            if (lastDate == null) {
+                                lastDate = this.parseToDateTime(this.xpp.getText());
+                            }
                             break;
                     }
                 }
@@ -99,7 +106,14 @@ public class EarthquakeXmlParser {
             }
 
         }
-        System.out.println(title + "," + link + ", " + description + ", " + lastDate);
+
+        FeedMetadata feedMeta = new FeedMetadata(title, link, description, lastDate);
+        return feedMeta;
+    }
+
+    private LocalDateTime parseToDateTime(String datetime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, d MMM yyyy H:m:s");
+        return LocalDateTime.parse(datetime, formatter);
     }
 
     // Sets up the XmlPullParser object with the sourced XML

@@ -33,6 +33,7 @@ public class EarthquakeXmlParser {
     }
 
     private void buildEarthquakes() {
+        Log.d(TAG, "Building quakes");
         try {
             int eventType = this.xpp.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT && eventType != -1) {
@@ -68,15 +69,27 @@ public class EarthquakeXmlParser {
         String tag = this.xpp.getName();
 
         while (!tag.equals(DETAIL_ITEM_TAG)) {
-            switch (tag) {
-                case "title":
-                    if (title.equals("")) title = this.xpp.getText();
-                case "link":
-                    if (link.equals("")) link = this.xpp.getText();
-                case "description":
-                    if (description.equals("")) description = this.xpp.getText();
-                case "lastBuildDate":
-                    if (lastDate.equals("")) lastDate = this.xpp.getText();
+            try {
+                if (this.xpp.getEventType() == XmlPullParser.TEXT) {
+                    switch (tag) {
+                        case "title":
+                            if (title.equals("")) title = this.xpp.getText();
+                            break;
+                        case "link":
+                            if (link.equals("")) {
+                                link = this.xpp.getText();
+                            }
+                            break;
+                        case "description":
+                            if (description.equals("")) description = this.xpp.getText();
+                            break;
+                        case "lastBuildDate":
+                            if (lastDate.equals("")) lastDate = this.xpp.getText();
+                            break;
+                    }
+                }
+            } catch(XmlPullParserException ex) {
+                Log.e(TAG, "Error attaining event type when building metadata object");
             }
 
             this.toNextEvent();

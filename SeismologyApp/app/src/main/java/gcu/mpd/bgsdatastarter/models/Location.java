@@ -6,6 +6,8 @@ public class Location {
     private String county;
     private Coordinates coordinates;
 
+    public Location() {}
+
     public Location(String town, String region, Coordinates coordinates) {
         this.town = town;
         this.county = county;

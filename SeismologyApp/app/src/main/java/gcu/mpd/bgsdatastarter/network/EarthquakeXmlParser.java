@@ -12,8 +12,16 @@ import java.io.StringReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import gcu.mpd.bgsdatastarter.models.Coordinates;
+import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.models.FeedMetadata;
+import gcu.mpd.bgsdatastarter.models.Location;
 
 public class EarthquakeXmlParser {
 
@@ -33,24 +41,108 @@ public class EarthquakeXmlParser {
 
         if (this.xpp != null) {
             FeedMetadata feedbackMetadata = this.buildMetaData();
-            this.buildEarthquakes();
+            List<Earthquake> earthquakes = this.buildEarthquakes();
+            Log.e(TAG, earthquakes.get(earthquakes.size() - 1).getTitle());
         }
     }
 
-    private void buildEarthquakes() {
+    private List<Earthquake> buildEarthquakes() {
         Log.d(TAG, "Building quakes");
+        List<Earthquake> earthquakes = new ArrayList<>();
+
         try {
             int eventType = this.xpp.getEventType();
+
+            Earthquake earthquake  = null;
+            Location location = null;
+            Coordinates coords = null;
+
             while (eventType != XmlPullParser.END_DOCUMENT && eventType != -1) {
 
-                if(eventType == XmlPullParser.START_DOCUMENT) {
-                    //System.out.println("Start document");
-                } else if(eventType == XmlPullParser.START_TAG) {
-                    //System.out.println("Start tag "+xpp.getName());
+                String tagName = null;
+
+                if(eventType == XmlPullParser.START_TAG) {
+                    tagName = this.xpp.getName();
+
+                    if (tagName.equals("item")) {
+                        earthquake  = new Earthquake();
+                        location = new Location();
+                        coords = new Coordinates();
+                    } else if (earthquake != null) {
+                        switch(tagName) {
+                            case "title":
+                                try {
+                                    earthquake.setTitle(this.xpp.nextText());
+                                } catch(XmlPullParserException ex) {
+                                    Log.e(TAG, "Exception occurred");
+                                } catch (IOException ex) {
+                                    Log.e(TAG, "IO Exception occurred");
+                                }
+                                break;
+
+                            case "description":
+                                String[] descrip;
+                                try {
+                                    descrip = this.xpp.nextText().split(";");
+                                    // Date of quake
+                                    String[] splitDate = descrip[0].split(":");
+                                    String[] datetimeArr = Arrays.copyOfRange(splitDate, 1, splitDate.length);
+                                    String datetime = String.join(":", datetimeArr).trim();
+                                    earthquake.setPubDate(parseToDateTime(datetime));
+
+                                    // Location (town/county)
+                                    String locationStr = descrip[1].split(":")[1].trim();
+                                    if (locationStr.contains(",")) {
+                                        String[] locSplit = locationStr.split(",");
+                                        location.setTown(locSplit[0].trim());
+                                        location.setCounty(locSplit[1].trim());
+                                    } else {
+                                        location.setTown(locationStr.trim());
+                                    }
+
+                                    // Lat/Lon coordinates
+                                    String[] latlon = descrip[2].split(":")[1].split(",");
+                                    coords.setLat(Float.parseFloat(latlon[0]));
+                                    coords.setLon(Float.parseFloat(latlon[1]));
+                                    location.setCoordinates(coords);
+
+                                    // Depth
+                                    String[] depthAndUnits = descrip[3].split(":")[1].trim().split(" ");
+                                    System.out.println(depthAndUnits.length);
+                                    int depth = Integer.parseInt(depthAndUnits[0].trim());
+                                    String units = depthAndUnits[1].trim();
+                                    earthquake.setDepth(depth);
+                                    earthquake.setDepthUnit(units);
+
+                                    // Magnitude
+                                    float mag = Float.parseFloat(descrip[4].split(":")[1].trim());
+                                    earthquake.setMagnitude(mag);
+
+                                } catch(XmlPullParserException ex) {
+                                    Log.e(TAG, "Exception occurred");
+                                } catch (IOException ex) {
+                                    Log.e(TAG, "IO Exception occurred");
+                                }
+                                break;
+
+                            case "link":
+                                try {
+                                    earthquake.setLink(this.xpp.nextText());
+                                } catch(XmlPullParserException ex) {
+                                    Log.e(TAG, "Exception occurred");
+                                } catch (IOException ex) {
+                                    Log.e(TAG, "IO Exception occurred");
+                                }
+                                break;
+                        }
+                    }
                 } else if(eventType == XmlPullParser.END_TAG) {
-                    //System.out.println("End tag "+xpp.getName());
-                } else if(eventType == XmlPullParser.TEXT) {
-                    //System.out.println("Text "+xpp.getText());
+                    // write the model to the list if </item>
+                    tagName = this.xpp.getName();
+                    if (tagName.equals("item") && earthquake != null) {
+                        earthquake.setLocation(location);
+                        earthquakes.add(earthquake);
+                    }
                 }
 
                 // get next event
@@ -59,6 +151,8 @@ public class EarthquakeXmlParser {
         } catch (XmlPullParserException ex) {
             Log.e(TAG, "Error building earthquake models from XML");
         }
+
+        return earthquakes;
     }
 
     private FeedMetadata buildMetaData() {
@@ -89,9 +183,8 @@ public class EarthquakeXmlParser {
                             if (description.equals("")) description = this.xpp.getText();
                             break;
                         case "lastBuildDate":
-                            if (lastDate == null) {
+                            if (lastDate == null)
                                 lastDate = this.parseToDateTime(this.xpp.getText());
-                            }
                             break;
                     }
                 }
@@ -99,12 +192,11 @@ public class EarthquakeXmlParser {
                 Log.e(TAG, "Error attaining event type when building metadata object");
             }
 
+            // move the parser to the next event, and change the tag if necessary
             this.toNextEvent();
-
             if (this.xpp.getName() != null) {
                 tag = this.xpp.getName();
             }
-
         }
 
         FeedMetadata feedMeta = new FeedMetadata(title, link, description, lastDate);

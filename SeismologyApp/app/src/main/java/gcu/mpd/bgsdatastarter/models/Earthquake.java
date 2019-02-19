@@ -1,14 +1,18 @@
 package gcu.mpd.bgsdatastarter.models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /* Model/POJO to represent individual Earthquake data */
 public class Earthquake
 {
     private String title;
     private String link;
     private String category;
-    //private Date pubDate;
+    private LocalDateTime pubDate;
     private Location location;
-    private float depth;
+    private int depth;
+    private String depthUnit;
     private float magnitude;
 
     /* No argument constructor */
@@ -39,13 +43,13 @@ public class Earthquake
         this.category = category;
     }
 
-//    public Date getPubDate() {
-//        return pubDate;
-//    }
-//
-//    public void setPubDate(Date pubDate) {
-//        this.pubDate = pubDate;
-//    }
+    public LocalDateTime getPubDate() {
+        return pubDate;
+    }
+
+    public void setPubDate(LocalDateTime pubDate) {
+        this.pubDate = pubDate;
+    }
 
     public Location getLocation() {
         return location;
@@ -55,12 +59,20 @@ public class Earthquake
         this.location = location;
     }
 
-    public float getDepth() {
+    public int getDepth() {
         return depth;
     }
 
-    public void setDepth(float depth) {
+    public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public String getDepthUnit() {
+        return depthUnit;
+    }
+
+    public void setDepthUnit(String depthUnit) {
+        this.depthUnit = depthUnit;
     }
 
     public float getMagnitude() {

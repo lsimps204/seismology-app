@@ -5,6 +5,8 @@ public class Coordinates {
     private float lat;
     private float lon;
 
+    public Coordinates() {}
+
     public Coordinates(float lat, float lon) {
         this.lat = lat;
         this.lon = lon;

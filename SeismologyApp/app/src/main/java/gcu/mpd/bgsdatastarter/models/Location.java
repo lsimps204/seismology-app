@@ -1,9 +1,13 @@
 package gcu.mpd.bgsdatastarter.models;
 
+//import androidx.room.Embedded;
+
 public class Location {
 
     private String town;
     private String county;
+
+    //@Embedded
     private Coordinates coordinates;
 
     public Location() {}

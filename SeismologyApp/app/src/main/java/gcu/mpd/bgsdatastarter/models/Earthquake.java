@@ -3,17 +3,28 @@ package gcu.mpd.bgsdatastarter.models;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+//import androidx.room.Embedded;
+//import androidx.room.Entity;
+//import androidx.room.PrimaryKey;
+
 /* Model/POJO to represent individual Earthquake data */
+
+//@Entity(tableName = "earthquakes")
 public class Earthquake
 {
-    private String title;
-    private String link;
-    private String category;
-    private LocalDateTime pubDate;
-    private Location location;
-    private int depth;
-    private String depthUnit;
-    private float magnitude;
+  //  @PrimaryKey
+    private int uid;
+
+    public String title;
+    public String link;
+    public String category;
+    public LocalDateTime pubDate;
+
+    //@Embedded
+    public Location location;
+    public int depth;
+    public String depthUnit;
+    public float magnitude;
 
     /* No argument constructor */
     public Earthquake() {}

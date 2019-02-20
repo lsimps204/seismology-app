@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawDataDisplay;
     private Button startButton;
+    private ProgressBar spinner;
     private String result = "";
     private String url1="";
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // Set up the raw links to the graphical components
         rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
         startButton = (Button)findViewById(R.id.startButton);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
         startButton.setOnClickListener(this);
 
 
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
     public void onClick(View aview)
     {
+        spinner.setVisibility(View.VISIBLE);
         startProgress();
     }
 

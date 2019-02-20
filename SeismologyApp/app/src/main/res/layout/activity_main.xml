@@ -3,10 +3,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/salutation"
@@ -14,26 +16,52 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:text="Welcome to Mobile Platform Development"
+            android:layout_marginVertical="25dp"
             />
-        <Button
-            android:id="@+id/startButton"
-            android:layout_width="fill_parent"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Earthquake Finder"
+                android:gravity="center"
+                />
+
+            <Button
+                android:id="@+id/startButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Press to get data"
+                />
+            <TextView
+                android:id="@+id/acknowledgement"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Contains British Geological Survey materials ©NERC 2019"
+                />
+            <TextView
+                android:id="@+id/rawDataDisplay"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Raw Data is Displayed here"
+                />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Press to get data"
-            />
-        <TextView
-            android:id="@+id/acknowledgement"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Contains British Geological Survey materials ©NERC 2019"
-            />
-        <TextView
-            android:id="@+id/rawDataDisplay"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Raw Data is Displayed here"
-            />
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
+
     </LinearLayout>
+
 </ScrollView>

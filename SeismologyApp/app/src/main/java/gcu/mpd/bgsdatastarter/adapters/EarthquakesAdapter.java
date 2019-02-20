@@ -46,7 +46,7 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            location = itemView.findViewById(R.id.quake_location);
+            location = itemView.findViewById(R.id.location);
         }
     }
 

@@ -2,8 +2,14 @@ package gcu.mpd.bgsdatastarter.models;
 
 import java.time.LocalDateTime;
 
+//import androidx.room.Entity;
+//import androidx.room.PrimaryKey;
+
+//@Entity(tableName = "metadata")
 public class FeedMetadata {
 
+  //  @PrimaryKey
+    private int id; //should only ever be one
     private String title;
     private String link;
     private String description;

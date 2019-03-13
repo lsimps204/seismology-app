@@ -59,8 +59,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // More Code goes here
     }
 
+    // Button click handler - fetches the data from the API
     public void onClick(View aview)
     {
+        result = ""; // clear out existing result
         spinner.setVisibility(View.VISIBLE);
         startProgress();
     }
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             //
             // Now that you have the xml data you can parse it
             //
-
+            System.out.println(result.length());
             EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
             xmlParser.parse();
 

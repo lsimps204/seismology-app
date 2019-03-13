@@ -35,15 +35,22 @@ public class EarthquakeXmlParser {
     }
 
     /* Master method for parsing the XML string
-    *  Calls submethods to do the processing and return domain objects */
+    *  Calls submethods to do the processing and return domain objects
+     */
     public void parse() {
-        this.setupParser();
+        if (this.xpp == null) {
+            this.setupParser();
+        }
 
         if (this.xpp != null) {
             FeedMetadata feedbackMetadata = this.buildMetaData();
             List<Earthquake> earthquakes = this.buildEarthquakes();
             Log.e(TAG, earthquakes.get(earthquakes.size() - 1).getTitle());
         }
+    }
+
+    private void clearData() {
+
     }
 
     private List<Earthquake> buildEarthquakes() {
@@ -57,7 +64,7 @@ public class EarthquakeXmlParser {
             Location location = null;
             Coordinates coords = null;
 
-            while (eventType != XmlPullParser.END_DOCUMENT && eventType != -1) {
+            while (eventType != XmlPullParser.END_DOCUMENT) {
 
                 String tagName = null;
 

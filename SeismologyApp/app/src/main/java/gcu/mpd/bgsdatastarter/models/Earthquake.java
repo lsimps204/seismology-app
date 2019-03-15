@@ -2,14 +2,11 @@ package gcu.mpd.bgsdatastarter.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-//import androidx.room.Embedded;
-//import androidx.room.Entity;
-//import androidx.room.PrimaryKey;
+import android.arch.persistence.room.Entity;
 
 /* Model/POJO to represent individual Earthquake data */
 
-//@Entity(tableName = "earthquakes")
+@Entity(tableName = "earthquakes")
 public class Earthquake
 {
   //  @PrimaryKey

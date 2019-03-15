@@ -2,12 +2,16 @@ package gcu.mpd.bgsdatastarter.models;
 
 //import androidx.room.Embedded;
 
-public class Location {
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
+@Entity(tableName = "location")
+public class Location {
     private String town;
     private String county;
 
-    //@Embedded
+    @Embedded
     private Coordinates coordinates;
 
     public Location() {}

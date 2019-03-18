@@ -32,22 +32,21 @@ public class EarthquakeXmlParser {
 
     // containers
     private List<Earthquake> earthquakes;
-
     private FeedMetadata feedMetadata;
 
     public EarthquakeXmlParser(String xml) {
         this.xml = xml;
         this.setupParser();
+        this.parse();
     }
 
     /* Master method for parsing the XML string
     *  Calls submethods to do the processing and return domain objects
      */
-    public void parse() {
+    private void parse() {
         if (this.xpp != null) {
-            FeedMetadata feedbackMetadata = this.buildMetaData();
-            List<Earthquake> earthquakes = this.buildEarthquakes();
-            Log.e(TAG, earthquakes.get(earthquakes.size() - 1).getTitle());
+            this.feedMetadata = this.buildMetaData();
+            this.earthquakes = this.buildEarthquakes();
         }
     }
 
@@ -63,7 +62,7 @@ public class EarthquakeXmlParser {
     // Logic for building list of earthquakes from the XML data
     private List<Earthquake> buildEarthquakes() {
         Log.d(TAG, "Building quakes");
-        List<Earthquake> earthquakes = new ArrayList<>();
+        List<Earthquake> eQuakes = new ArrayList<>();
 
         try {
             int eventType = this.xpp.getEventType();
@@ -155,7 +154,7 @@ public class EarthquakeXmlParser {
                     tagName = this.xpp.getName();
                     if (tagName.equals("item") && earthquake != null) {
                         earthquake.setLocation(location);
-                        earthquakes.add(earthquake);
+                        eQuakes.add(earthquake);
                     }
                 }
 
@@ -166,7 +165,7 @@ public class EarthquakeXmlParser {
             Log.e(TAG, "Error building earthquake models from XML");
         }
 
-        return earthquakes;
+        return eQuakes;
     }
 
     private FeedMetadata buildMetaData() {

@@ -19,11 +19,15 @@ public class EarthquakeListViewModel extends AndroidViewModel {
     public EarthquakeListViewModel(@NonNull Application app) {
         super(app);
         repository = new EarthquakeRepository(app);
-        //earthquakes = repository.getAllEarthquakes();
+//        earthquakes = repository.getAllEarthquakes();
     }
 
     public LiveData<List<Earthquake>> getEarthquakes() {
-        return earthquakes;
+        return repository.getAllEarthquakes();
+    }
+
+    public int getNumberEntities() {
+        return earthquakes.getValue().size();
     }
 
 }

@@ -30,12 +30,14 @@ public class EarthquakeRepository {
 
     // Retrieves all the earthquakes
     public LiveData<List<Earthquake>> getAllEarthquakes() {
-        if (earthquakeDao.count() == 0) {
+        if (earthquakeDao.getAllEarthquakes().getValue() == null) {
             this.fetchRemoteData();
         }
         return earthquakeDao.getAllEarthquakes();
     }
 
+    // This method initiates the remote call to the API to fetch the data
+    // Uses the ExecutorService to run the callable WebService on a different Thread
     public void fetchRemoteData() {
         ExecutorService service = Executors.newSingleThreadExecutor();
         WebService ws = new WebService();
@@ -43,11 +45,11 @@ public class EarthquakeRepository {
         try {
             String result = future.get();
             EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
-            xmlParser.parse();
             List<Earthquake> quakes = xmlParser.getEarthquakes();
+            //Log.e("taggggz", Integer.toString(quakes.size()));
             this.insertEarthquakes(quakes);
         } catch (Exception e) {
-            Log.e("EarthquakeRepository", "Error retrieving data");
+            Log.e("EarthquakeRepository", e.toString());
         } finally {
             service.shutdown();
         }
@@ -55,7 +57,8 @@ public class EarthquakeRepository {
 
     /* Inserts all earthquakes into the database */
     public void insertEarthquakes(final List<Earthquake> earthquakes) {
-       Earthquake[] quakes = (Earthquake[]) earthquakes.toArray();
+       Earthquake[] quakesArr = new Earthquake[earthquakes.size()];
+       Earthquake[] quakes = earthquakes.toArray(quakesArr);
        new insertAsyncTask(earthquakeDao).execute(quakes);
     }
 

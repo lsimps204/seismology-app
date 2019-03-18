@@ -13,6 +13,9 @@
 // Update the package name to include your Student Identifier
 package gcu.mpd.bgsdatastarter;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,19 +35,23 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
 import gcu.mpd.bgsdatastarter.network.WebService;
 import gcu.mpd.bgsdatastarter.repositories.EarthquakeRepository;
+import gcu.mpd.bgsdatastarter.viewmodels.EarthquakeListViewModel;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawDataDisplay;
     private Button startButton;
     private ProgressBar spinner;
+    private EarthquakeListViewModel earthquakeListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,8 +64,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         spinner = (ProgressBar)findViewById(R.id.progressBar1);
         startButton.setOnClickListener(this);
 
-
         // More Code goes here
+        earthquakeListViewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
+        earthquakeListViewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
+            @Override
+            public void onChanged(@Nullable List<Earthquake> earthquakes) {
+                System.out.println(earthquakes);
+            }
+        });
     }
 
     // Button click handler - fetches the data from the API
@@ -79,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         try {
             result = future.get();
             EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
-            xmlParser.parse();
             System.out.println(result.length());
             rawDataDisplay.setText(result);
         } catch (Exception e) {

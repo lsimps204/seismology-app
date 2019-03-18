@@ -18,7 +18,7 @@ public class EarthquakeListViewModel extends ViewModel {
         if (earthquakes != null) {
             return;
         }
-        eRepo.getEarthquakes();
+        //eRepo.getEarthquakes();
     }
 
     public LiveData<List<Earthquake>> getEarthquakes() {

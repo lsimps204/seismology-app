@@ -34,14 +34,14 @@ public abstract class EarthquakeDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            //new PopulateDbAsyncTask(INSTANCE).execute(); // call the below AsyncTask to populate
-        }
-    };
-
+//    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+//        @Override
+//        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+//            super.onCreate(db);
+//            new PopulateDbAsyncTask(INSTANCE).execute(); // call the below AsyncTask to populate
+//        }
+//    };
+//
 //    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
 //        private EarthquakeDao dao;
 //

@@ -4,13 +4,19 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.models.daos.EarthquakeDao;
 import gcu.mpd.bgsdatastarter.models.database.EarthquakeDatabase;
+import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
+import gcu.mpd.bgsdatastarter.network.WebService;
 
 public class EarthquakeRepository {
 
@@ -20,7 +26,31 @@ public class EarthquakeRepository {
     public EarthquakeRepository(Context ctx) {
         EarthquakeDatabase db = EarthquakeDatabase.getDatabase(ctx);
         earthquakeDao = db.earthquakeDao();
-        allEarthquakes = earthquakeDao.getAllEarthquakes();
+    }
+
+    // Retrieves all the earthquakes
+    public LiveData<List<Earthquake>> getAllEarthquakes() {
+        if (earthquakeDao.count() == 0) {
+            this.fetchRemoteData();
+        }
+        return earthquakeDao.getAllEarthquakes();
+    }
+
+    public void fetchRemoteData() {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        WebService ws = new WebService();
+        Future<String> future = service.submit(ws);
+        try {
+            String result = future.get();
+            EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
+            xmlParser.parse();
+            List<Earthquake> quakes = xmlParser.getEarthquakes();
+            this.insertEarthquakes(quakes);
+        } catch (Exception e) {
+            Log.e("EarthquakeRepository", "Error retrieving data");
+        } finally {
+            service.shutdown();
+        }
     }
 
     /* Inserts all earthquakes into the database */

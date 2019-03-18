@@ -30,18 +30,20 @@ public class EarthquakeXmlParser {
     private String xml; // xml from the data source
     private XmlPullParser xpp;
 
+    // containers
+    private List<Earthquake> earthquakes;
+
+    private FeedMetadata feedMetadata;
+
     public EarthquakeXmlParser(String xml) {
         this.xml = xml;
+        this.setupParser();
     }
 
     /* Master method for parsing the XML string
     *  Calls submethods to do the processing and return domain objects
      */
     public void parse() {
-        if (this.xpp == null) {
-            this.setupParser();
-        }
-
         if (this.xpp != null) {
             FeedMetadata feedbackMetadata = this.buildMetaData();
             List<Earthquake> earthquakes = this.buildEarthquakes();
@@ -49,10 +51,16 @@ public class EarthquakeXmlParser {
         }
     }
 
-    private void clearData() {
-
+    // getters
+    public List<Earthquake> getEarthquakes() {
+        return this.earthquakes;
+    }
+    public FeedMetadata getFeedMetadata() {
+        return feedMetadata;
     }
 
+
+    // Logic for building list of earthquakes from the XML data
     private List<Earthquake> buildEarthquakes() {
         Log.d(TAG, "Building quakes");
         List<Earthquake> earthquakes = new ArrayList<>();

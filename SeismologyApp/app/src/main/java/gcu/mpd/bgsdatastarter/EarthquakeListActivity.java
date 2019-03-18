@@ -28,7 +28,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
 
         /// retrieve data from repo
-        viewModel.init();
+//        viewModel.init();
 
         // observe changes to earthquakes
         viewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {

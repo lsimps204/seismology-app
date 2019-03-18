@@ -18,6 +18,9 @@ public interface EarthquakeDao {
     @Query("SELECT * FROM earthquakes")
     public LiveData<List<Earthquake>> getAllEarthquakes();
 
+    @Query("SELECT COUNT(*) FROM earthquakes")
+    public int count();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertAll(Earthquake... earthquakes);
 

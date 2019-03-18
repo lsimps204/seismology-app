@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -19,7 +20,7 @@ import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
 import gcu.mpd.bgsdatastarter.network.WebService;
 
 public class EarthquakeRepository {
-
+    private final String MYTAG = "EarthquakeRepository";
     private EarthquakeDao earthquakeDao;
     private LiveData<List<Earthquake>> allEarthquakes;
 
@@ -30,15 +31,24 @@ public class EarthquakeRepository {
 
     // Retrieves all the earthquakes
     public LiveData<List<Earthquake>> getAllEarthquakes() {
-        if (earthquakeDao.getAllEarthquakes().getValue() == null) {
+        if (this.getCount() <= 0) {
             this.fetchRemoteData();
         }
         return earthquakeDao.getAllEarthquakes();
     }
 
+    public int getCount() {
+        try {
+            return (new countAsyncTask(earthquakeDao).execute().get());
+        } catch(Exception e) {
+            return -1;
+        }
+    }
+
     // This method initiates the remote call to the API to fetch the data
     // Uses the ExecutorService to run the callable WebService on a different Thread
     public void fetchRemoteData() {
+        Log.e(MYTAG, "Fetching data from the remote API");
         ExecutorService service = Executors.newSingleThreadExecutor();
         WebService ws = new WebService();
         Future<String> future = service.submit(ws);
@@ -46,7 +56,6 @@ public class EarthquakeRepository {
             String result = future.get();
             EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
             List<Earthquake> quakes = xmlParser.getEarthquakes();
-            //Log.e("taggggz", Integer.toString(quakes.size()));
             this.insertEarthquakes(quakes);
         } catch (Exception e) {
             Log.e("EarthquakeRepository", e.toString());
@@ -94,6 +103,17 @@ public class EarthquakeRepository {
         protected Void doInBackground(Void... voids) {
             dao.deleteAllEarthquakes();
             return null;
+        }
+    }
+
+    /* Gets a count of the database entities */
+    private static class countAsyncTask extends AsyncTask<Void, Void, Integer> {
+        private EarthquakeDao dao;
+
+        countAsyncTask(EarthquakeDao dao) { this.dao = dao; }
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return dao.count();
         }
     }
 }

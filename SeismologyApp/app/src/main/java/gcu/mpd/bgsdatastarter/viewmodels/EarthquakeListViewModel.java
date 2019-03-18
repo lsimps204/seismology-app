@@ -26,8 +26,14 @@ public class EarthquakeListViewModel extends AndroidViewModel {
         return repository.getAllEarthquakes();
     }
 
-    public int getNumberEntities() {
-        return earthquakes.getValue().size();
+    public void deleteAll() {
+        repository.deleteAllEarthquakes();
     }
+//    public int getNumberEntities() {
+//        return earthquakes.getValue().size();
+//    }
 
+    public int getCount() {
+        return repository.getCount();
+    }
 }

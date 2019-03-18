@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawDataDisplay;
     private Button startButton;
+    private Button deleteButton;
     private ProgressBar spinner;
     private EarthquakeListViewModel earthquakeListViewModel;
 
@@ -61,8 +62,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // Set up the raw links to the graphical components
         rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
         startButton = (Button)findViewById(R.id.startButton);
+        deleteButton = (Button)findViewById(R.id.deleteAll);
         spinner = (ProgressBar)findViewById(R.id.progressBar1);
         startButton.setOnClickListener(this);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                earthquakeListViewModel.deleteAll();
+            }
+        });
 
         // More Code goes here
         earthquakeListViewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
@@ -78,28 +86,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     public void onClick(View aview)
     {
         spinner.setVisibility(View.VISIBLE);
-        startProgress();
-    }
-
-    public void startProgress()
-    {
-        // Run network access on a separate thread;
-        //new Thread(new Task(urlSource)).start();
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        WebService ws = new WebService();
-        Future<String> future = service.submit(ws);
-        String result;
-        try {
-            result = future.get();
-            EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
-            System.out.println(result.length());
-            rawDataDisplay.setText(result);
-        } catch (Exception e) {
-            Log.e("EarthquakeRepository", "Error retrieving data");
-        } finally {
-            service.shutdown();
-        }
-
+        Log.e("COUNT: ", Integer.toString(earthquakeListViewModel.getCount()));
+        rawDataDisplay.setText(earthquakeListViewModel.getEarthquakes().getValue().toString());
+        spinner.setVisibility(View.INVISIBLE);
     }
 
 }

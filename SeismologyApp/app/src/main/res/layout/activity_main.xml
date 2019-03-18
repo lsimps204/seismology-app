@@ -38,6 +38,13 @@
                 android:layout_height="wrap_content"
                 android:text="Press to get data"
                 />
+            <Button
+                android:id="@+id/deleteAll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:text="Delete"
+                />
             <TextView
                 android:id="@+id/acknowledgement"
                 android:layout_width="fill_parent"

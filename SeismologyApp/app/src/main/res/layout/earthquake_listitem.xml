@@ -8,12 +8,13 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingStart="16dp"
-    android:paddingTop="16dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/mag_textview"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:textColor="@android:color/white"
@@ -28,7 +29,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp">
+        android:layout_marginStart="20dp"
+        >
 
         <TextView
             android:id="@+id/depth_textview"

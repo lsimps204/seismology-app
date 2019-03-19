@@ -1,6 +1,8 @@
 package gcu.mpd.bgsdatastarter.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +29,7 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
 
     // Constructor: pass in the list of earthquakes and set local variable
     public EarthquakesAdapter(Context context) {
-        context = context;
+        this.context = context;
     }
 
 
@@ -83,6 +85,9 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
         // Set item views based on your views and data model
         viewHolder.location.setText(earthquake.getLocation().getTown() + " " + earthquake.getLocation().getCounty());
         viewHolder.magnitude.setText(Float.toString(earthquake.getMagnitude()));
+
+        GradientDrawable magCircle = (GradientDrawable)viewHolder.magnitude.getBackground();
+        magCircle.setColor(getMagnitudeColor(earthquake.getMagnitude()));
         viewHolder.date.setText(earthquake.getPubDate().toString());
         viewHolder.time.setText(earthquake.getPubDate().toLocalTime().toString());
         viewHolder.depth.setText(Integer.toString(earthquake.getDepth()));
@@ -104,7 +109,48 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
     }
 
     public void setEarthquakes(List<Earthquake> earthquakes) {
+        Log.e("COUNT: ", Integer.toString(earthquakes.size()));
         this.earthquakes = earthquakes;
         notifyDataSetChanged();
+    }
+
+    private int getMagnitudeColor(double magnitude) {
+
+        int magnitudeColorResourceId;
+        int magnitudeFloor = (int) Math.floor(magnitude);
+        switch (magnitudeFloor) {
+            case 0:
+            case 1:
+                magnitudeColorResourceId = R.color.mag1;
+                break;
+            case 2:
+                magnitudeColorResourceId = R.color.mag2;
+                break;
+            case 3:
+                magnitudeColorResourceId = R.color.mag3;
+                break;
+            case 4:
+                magnitudeColorResourceId = R.color.mag4;
+                break;
+            case 5:
+                magnitudeColorResourceId = R.color.mag5;
+                break;
+            case 6:
+                magnitudeColorResourceId = R.color.mag6;
+                break;
+            case 7:
+                magnitudeColorResourceId = R.color.mag7;
+                break;
+            case 8:
+                magnitudeColorResourceId = R.color.mag8;
+                break;
+            case 9:
+                magnitudeColorResourceId = R.color.mag9;
+                break;
+            default:
+                magnitudeColorResourceId = R.color.mag10;
+                break;
+        }
+        return ContextCompat.getColor(context, magnitudeColorResourceId);
     }
 }

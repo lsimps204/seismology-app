@@ -19,6 +19,8 @@ import gcu.mpd.bgsdatastarter.models.database.EarthquakeDatabase;
 import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
 import gcu.mpd.bgsdatastarter.network.WebService;
 
+/* The Repository class mediates between the ViewModel on the front-end, and the data sources on the back end.
+*  The repository hides data fetching details, from both the SQLite database, and the remote XML API. */
 public class EarthquakeRepository {
     private final String MYTAG = "EarthquakeRepository";
     private EarthquakeDao earthquakeDao;
@@ -46,7 +48,7 @@ public class EarthquakeRepository {
     }
 
     // This method initiates the remote call to the API to fetch the data
-    // Uses the ExecutorService to run the callable WebService on a different Thread
+    // Uses the ExecutorService to run the callable WebService on a new Thread
     public void fetchRemoteData() {
         Log.e(MYTAG, "Fetching data from the remote API");
         ExecutorService service = Executors.newSingleThreadExecutor();
@@ -76,7 +78,9 @@ public class EarthquakeRepository {
         new deleteAllAsyncTask(earthquakeDao).execute();
     }
 
-    /* ASYNC TASK DEFINITIONS */
+    /***************************
+     * ASYNC TASK DEFINITIONS
+     */
     private static class insertAsyncTask extends AsyncTask<Earthquake, Void, Void> {
         private EarthquakeDao dao;
 

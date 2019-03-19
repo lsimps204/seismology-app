@@ -23,6 +23,7 @@ import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.models.FeedMetadata;
 import gcu.mpd.bgsdatastarter.models.Location;
 
+/* This class parses the XML data from the API into domain objects */
 public class EarthquakeXmlParser {
 
     private final String TAG = "EarthquakeXmlParser";

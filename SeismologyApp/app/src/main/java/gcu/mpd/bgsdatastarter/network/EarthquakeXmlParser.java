@@ -35,6 +35,7 @@ public class EarthquakeXmlParser {
     private List<Earthquake> earthquakes;
     private FeedMetadata feedMetadata;
 
+    // Constructor, which accepts the XML data to be parsed
     public EarthquakeXmlParser(String xml) {
         this.xml = xml;
         this.setupParser();

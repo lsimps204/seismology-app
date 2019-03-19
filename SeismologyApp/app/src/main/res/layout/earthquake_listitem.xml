@@ -11,9 +11,9 @@
     android:paddingTop="16dp">
 
     <TextView
-        android:id="@+id/mag_text_view"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:id="@+id/mag_textview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:textColor="@android:color/white"
@@ -31,7 +31,7 @@
         android:layout_marginStart="16dp">
 
         <TextView
-            android:id="@+id/offset_text_view"
+            android:id="@+id/depth_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -43,7 +43,7 @@
             tools:text="30km S of" />
 
         <TextView
-            android:id="@+id/place_text_view"
+            android:id="@+id/location_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -63,7 +63,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/date_text_view"
+            android:id="@+id/date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorEarthquakeDetails"
@@ -71,7 +71,7 @@
             tools:text="Mar 6, 2010"/>
 
         <TextView
-            android:id="@+id/time_text_view"
+            android:id="@+id/time_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

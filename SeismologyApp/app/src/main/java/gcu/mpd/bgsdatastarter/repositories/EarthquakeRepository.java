@@ -20,7 +20,7 @@ import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
 import gcu.mpd.bgsdatastarter.network.WebService;
 
 /* The Repository class mediates between the ViewModel on the front-end, and the data sources on the back end.
-*  The repository hides data fetching details, from both the SQLite database, and the remote XML API. */
+*  The repository hides data fetching details, from both the SQLite database, and the remote XML API */
 public class EarthquakeRepository {
     private final String MYTAG = "EarthquakeRepository";
     private EarthquakeDao earthquakeDao;

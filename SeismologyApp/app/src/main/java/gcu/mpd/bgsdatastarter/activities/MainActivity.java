@@ -11,10 +11,11 @@
 //
 
 // Update the package name to include your Student Identifier
-package gcu.mpd.bgsdatastarter;
+package gcu.mpd.bgsdatastarter.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,25 +26,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
+import gcu.mpd.bgsdatastarter.R;
 import gcu.mpd.bgsdatastarter.models.Earthquake;
-import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
-import gcu.mpd.bgsdatastarter.network.WebService;
-import gcu.mpd.bgsdatastarter.repositories.EarthquakeRepository;
 import gcu.mpd.bgsdatastarter.viewmodels.EarthquakeListViewModel;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener
@@ -87,8 +73,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     {
         spinner.setVisibility(View.VISIBLE);
         Log.e("COUNT: ", Integer.toString(earthquakeListViewModel.getCount()));
-        rawDataDisplay.setText(earthquakeListViewModel.getEarthquakes().getValue().toString());
+        rawDataDisplay.setText(earthquakeListViewModel.getEarthquakes().toString());
         spinner.setVisibility(View.INVISIBLE);
+        Intent myIntent = new Intent(getBaseContext(), EarthquakeListActivity.class);
+        startActivity(myIntent);
     }
 
 }

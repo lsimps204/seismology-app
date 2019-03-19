@@ -1,4 +1,4 @@
-package gcu.mpd.bgsdatastarter;
+package gcu.mpd.bgsdatastarter.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
+import gcu.mpd.bgsdatastarter.R;
 import gcu.mpd.bgsdatastarter.adapters.EarthquakesAdapter;
 import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.viewmodels.EarthquakeListViewModel;
@@ -22,28 +23,25 @@ public class EarthquakeListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.earthquake_list_main);
+        initRecyclerView();
 
         viewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
 
-        /// retrieve data from repo
-//        viewModel.init();
-
-        // observe changes to earthquakes
+        // observe any changes to the list
         viewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
             @Override
             public void onChanged(@Nullable List<Earthquake> earthquakes) {
-                // notify adapter that data has changed
+                adapter.setEarthquakes(earthquakes);
             }
         });
 
-        initRecyclerView();
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.earthquake_recyclerview);
-        adapter = new EarthquakesAdapter(this, viewModel.getEarthquakes().getValue());
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.earthquake_recyclerview);
+        recyclerView.setHasFixedSize(true);
+        adapter = new EarthquakesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

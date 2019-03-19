@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
@@ -19,15 +22,13 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
     private static final String TAG = "EarthquakeAdapter";
 
     // Holds list of earthquakes
-    private List<Earthquake> earthquakes;
+    private List<Earthquake> earthquakes = new ArrayList<>();
     private Context context;
 
     // Constructor: pass in the list of earthquakes and set local variable
-    public EarthquakesAdapter(Context context, List<Earthquake> earthquakes) {
+    public EarthquakesAdapter(Context context) {
         context = context;
-        earthquakes = earthquakes;
     }
-
 
 
     // Provide a direct reference to each of the views within a data item
@@ -36,9 +37,11 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-//        public TextView nameTextView;
-//        public Button messageButton;
         TextView location;
+        TextView magnitude;
+        TextView depth;
+        TextView date;
+        TextView time;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -46,7 +49,11 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            location = itemView.findViewById(R.id.location);
+            magnitude = itemView.findViewById(R.id.mag_textview);
+            depth = itemView.findViewById(R.id.depth_textview);
+            location = itemView.findViewById(R.id.location_textview);
+            date = itemView.findViewById(R.id.date_textview);
+            time = itemView.findViewById(R.id.time_textview);
         }
     }
 
@@ -75,6 +82,10 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
 
         // Set item views based on your views and data model
         viewHolder.location.setText(earthquake.getLocation().getTown() + " " + earthquake.getLocation().getCounty());
+        viewHolder.magnitude.setText(Float.toString(earthquake.getMagnitude()));
+        viewHolder.date.setText(earthquake.getPubDate().toString());
+        viewHolder.time.setText(earthquake.getPubDate().toLocalTime().toString());
+        viewHolder.depth.setText(Integer.toString(earthquake.getDepth()));
 
         // Can set a click listener on each item here, for going into detail view, etc
         // More likely, can initiate a new activity for the detail view
@@ -90,5 +101,10 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
     @Override
     public int getItemCount() {
         return earthquakes.size();
+    }
+
+    public void setEarthquakes(List<Earthquake> earthquakes) {
+        this.earthquakes = earthquakes;
+        notifyDataSetChanged();
     }
 }

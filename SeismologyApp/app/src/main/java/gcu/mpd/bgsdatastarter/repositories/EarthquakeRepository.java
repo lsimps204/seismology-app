@@ -6,6 +6,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -36,7 +40,23 @@ public class EarthquakeRepository {
         if (this.getCount() <= 0) {
             this.fetchRemoteData();
         }
-        return earthquakeDao.getAllEarthquakes();
+        this.allEarthquakes = earthquakeDao.getAllEarthquakes();
+        return this.allEarthquakes;
+    }
+
+    public List<Earthquake> getEarthquakesByDate(LocalDate date) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateToCheck = date.format(fmt);
+        //System.out.println("NOW: " + date.format(fmt));
+        System.out.println(dateToCheck);
+        List<Earthquake> quakesOnDate = new ArrayList<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            System.out.println(quake.getPubDate().toLocalDate());
+            if (quake.getPubDate().toLocalDate().toString().equals(dateToCheck)) {
+                quakesOnDate.add(quake);
+            }
+        }
+        return quakesOnDate;
     }
 
     public int getCount() {

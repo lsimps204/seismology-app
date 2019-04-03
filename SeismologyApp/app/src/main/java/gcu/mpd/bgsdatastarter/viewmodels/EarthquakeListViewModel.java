@@ -6,6 +6,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
@@ -24,6 +26,10 @@ public class EarthquakeListViewModel extends AndroidViewModel {
 
     public LiveData<List<Earthquake>> getEarthquakes() {
         return repository.getAllEarthquakes();
+    }
+
+    public List<Earthquake> getEarthquakesByDate(LocalDate date) {
+        return repository.getEarthquakesByDate(date);
     }
 
     public void deleteAll() {

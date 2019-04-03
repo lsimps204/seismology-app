@@ -13,6 +13,7 @@
 // Update the package name to include your Student Identifier
 package gcu.mpd.bgsdatastarter.activities;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
@@ -74,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         spinner.setVisibility(View.VISIBLE);
         Log.e("COUNT: ", Integer.toString(earthquakeListViewModel.getCount()));
         rawDataDisplay.setText(earthquakeListViewModel.getEarthquakes().toString());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e){}
         spinner.setVisibility(View.INVISIBLE);
         Intent myIntent = new Intent(getBaseContext(), EarthquakeListActivity.class);
         startActivity(myIntent);

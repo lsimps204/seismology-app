@@ -1,5 +1,6 @@
 package gcu.mpd.bgsdatastarter.activities;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
@@ -38,6 +42,9 @@ public class EarthquakeListActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Earthquake> earthquakes) {
                 adapter.setEarthquakes(earthquakes);
+                LocalDate localDate = LocalDate.of(2019, 03, 30);
+                List<Earthquake> quakes = viewModel.getEarthquakesByDate(localDate);
+                System.out.println(quakes);
             }
         });
 

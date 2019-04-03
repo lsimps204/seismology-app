@@ -125,6 +125,7 @@ public class EarthquakeXmlParser {
                                     // Depth
                                     String[] depthAndUnits = descrip[3].split(":")[1].trim().split(" ");
                                     int depth = Integer.parseInt(depthAndUnits[0].trim());
+
                                     String units = depthAndUnits[1].trim();
                                     earthquake.setDepth(depth);
                                     earthquake.setDepthUnit(units);

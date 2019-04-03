@@ -74,23 +74,36 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
     }
 
 
-    // Involves populating data into the item through holder
+    // The onBindViewHolder method populates data into the item through holder
     @Override
     public void onBindViewHolder(EarthquakesAdapter.ViewHolder viewHolder, int position) {
         Log.d(TAG, "onBindViewHolder called");
 
-        // Get the data model based on position
+        // Get the data model based on position within the arraylist
         final Earthquake earthquake = earthquakes.get(position);
 
         // Set item views based on your views and data model
-        viewHolder.location.setText(earthquake.getLocation().getTown() + " " + earthquake.getLocation().getCounty());
+
+        // first, build the location string and populate text-item
+        String locationStr = earthquake.getLocation().getTown();
+        if (earthquake.getLocation().getCounty() != null) {
+            locationStr += " " + earthquake.getLocation().getCounty();
+        }
+        locationStr = locationStr.substring(0, 1).toUpperCase() + locationStr.substring(1).toLowerCase();
+        viewHolder.location.setText(locationStr);
         viewHolder.magnitude.setText(Float.toString(earthquake.getMagnitude()));
 
+        // set the colour of the background in circle displaying magnitude
+        // colour depends on the value of the magnitude
         GradientDrawable magCircle = (GradientDrawable)viewHolder.magnitude.getBackground();
         magCircle.setColor(getMagnitudeColor(earthquake.getMagnitude()));
+
+        // Set the data and time fields in the view
         viewHolder.date.setText(earthquake.getPubDate().toString());
         viewHolder.time.setText(earthquake.getPubDate().toLocalTime().toString());
-        viewHolder.depth.setText(Integer.toString(earthquake.getDepth()));
+
+        // Set the depth
+        viewHolder.depth.setText("Depth: " +Integer.toString(earthquake.getDepth()) + "km");
 
         // Can set a click listener on each item here, for going into detail view, etc
         // More likely, can initiate a new activity for the detail view

@@ -6,6 +6,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
@@ -17,6 +19,9 @@ public interface EarthquakeDao {
     // LiveData means the result is observable
     @Query("SELECT * FROM earthquakes")
     public LiveData<List<Earthquake>> getAllEarthquakes();
+
+    @Query("SELECT * FROM earthquakes WHERE pubDate = date(:date)")
+    public LiveData<List<Earthquake>> getEarthquakesByDate(String date);
 
     @Query("SELECT COUNT(*) FROM earthquakes")
     public int count();

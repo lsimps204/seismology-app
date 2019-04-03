@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -47,16 +50,103 @@ public class EarthquakeRepository {
     public List<Earthquake> getEarthquakesByDate(LocalDate date) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateToCheck = date.format(fmt);
-        //System.out.println("NOW: " + date.format(fmt));
-        System.out.println(dateToCheck);
         List<Earthquake> quakesOnDate = new ArrayList<>();
         for (Earthquake quake : this.allEarthquakes.getValue()) {
-            System.out.println(quake.getPubDate().toLocalDate());
             if (quake.getPubDate().toLocalDate().toString().equals(dateToCheck)) {
                 quakesOnDate.add(quake);
             }
         }
         return quakesOnDate;
+    }
+
+    public List<Earthquake> getEarthquakesBetweenDates(LocalDate start, LocalDate end) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDate = start.format(fmt);
+        String endDate = end.format(fmt);
+        List<Earthquake> quakesBetweenDates = new ArrayList<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            quakeDate = quake.getPubDate().toLocalDate();
+            if (quakeDate.isAfter(start) && quakeDate.isBefore(end)) {
+                quakesBetweenDates.add(quake);
+            }
+        }
+        return quakesBetweenDates;
+    }
+
+    public Earthquake getHighestMagnitude() {
+        Comparator<Earthquake> cmp = new Comparator<Earthquake>() {
+            @Override
+            public int compare(Earthquake e1, Earthquake e2) {
+                Float mag1 = e1.getMagnitude();
+                Float mag2 = e2.getMagnitude();
+                return mag1.compareTo(mag2);
+            }
+        };
+        return Collections.max(this.allEarthquakes.getValue(), cmp);
+    }
+
+    public Earthquake getDeepestQuake() {
+        Comparator<Earthquake> cmp = new Comparator<Earthquake>() {
+            @Override
+            public int compare(Earthquake e1, Earthquake e2) {
+                Integer mag1 = e1.getDepth();
+                Integer mag2 = e2.getDepth();
+                return mag1.compareTo(mag2);
+            }
+        };
+        return Collections.max(this.allEarthquakes.getValue(), cmp);
+    }
+
+    public Entry<String, List<Earthquake>> getDayWithMostQuakes() {
+        HashMap<String, List<Earthquake>> groupedQuakes = this.groupEarthquakesByDate();
+        return this.findMostCommon(groupedQuakes);
+    }
+
+
+    public Entry<String, List<Earthquake>> getCountyWithMostQuakes() {
+        HashMap<String, List<Earthquake>> groupedQuakes = this.groupEarthquakesByCounty();
+        return this.findMostCommon(groupedQuakes);
+    }
+
+    private Entry<String, List<Earthquake>> findMostCommon(HashMap<String, List<Earthquake>> groupedQuakes) {
+        Entry<String, List<Earthquake>> maxEntry = null;
+
+        for (Entry<String, List<Earthquake>> entry : groupedQuakes.entrySet()) {
+            if (maxEntry == null || entry.getValue().size() > maxEntry.getValue().size()) {
+                maxEntry = entry;
+            }
+        }
+        return maxEntry;
+    }
+
+    private HashMap<String, List<Earthquake>> groupEarthquakesByDate() {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        HashMap<String, List<Earthquakes>> quakesByDate = new HashMap<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            String quakeDate = quake.getPubDate().toLocalDate().format(fmt);
+            List<Earthquake> quakes = quakesByDate.get(quakeDate);
+            if (quakes == null) {
+                quakes = new ArrayList<>();
+            }
+            quakes.add(quake);
+            quakesByDate.put(quakeDate, quakes);
+        }
+        return quakesByDate;
+    }
+
+    private HashMap<String, List<Earthquake>> groupEarthquakesByCounty() {
+        HashMap<String, List<Earthquakes>> quakesByCounty = new HashMap<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            String county = quake.getLocation().getCounty();
+            if (county == null) continue;
+            List<Earthquake> quakes = quakesByCounty.get(county);
+            if (quakes == null) {
+                quakes = new ArrayList<>();
+            }
+            quakes.add(quake);
+            quakesByCounty.put(county, quakes);
+        }
+        return quakesByCounty;
     }
 
     public int getCount() {

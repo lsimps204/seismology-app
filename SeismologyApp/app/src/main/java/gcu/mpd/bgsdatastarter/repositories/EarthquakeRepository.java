@@ -85,6 +85,39 @@ public class EarthquakeRepository {
         return Collections.max(this.allEarthquakes.getValue(), cmp);
     }
 
+    public List<Earthquake> getEarthquakesByMagnitudeAbove(float magnitude) {
+        List<Earthquake> quakes = new ArrayList<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            if (quake.getMagnitude() > magnitude) {
+                quakes.add(quake);
+            }
+        }
+        return quakes;
+    }
+
+    public List<Earthquake> findEarthquakesByName(String name) {
+        List<Earthquake> quakes = new ArrayList<>();
+        String searchTerm = name.toLowerCase();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            String county = quake.getLocation().getCounty().toLowerCase();
+            String town = quake.getLocation().getTown().toLowerCase();
+            if (county.contains(searchTerm) || town.contains(searchTerm)) {
+                quakes.add(quake);
+            }
+        }
+        return quakes;
+    }
+    
+    public List<Earthquake> getEarthquakesByDepthAbove(int depth) {
+        List<Earthquake> quakes = new ArrayList<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            if (quake.getDepth() > depth) {
+                quakes.add(quake);
+            }
+        }
+        return quakes;
+    }
+
     public Earthquake getDeepestQuake() {
         Comparator<Earthquake> cmp = new Comparator<Earthquake>() {
             @Override

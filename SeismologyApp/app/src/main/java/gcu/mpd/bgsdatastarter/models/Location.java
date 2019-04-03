@@ -16,7 +16,7 @@ public class Location {
 
     public Location() {}
 
-    public Location(String town, String region, Coordinates coordinates) {
+    public Location(String town, String county, Coordinates coordinates) {
         this.town = town;
         this.county = county;
         this.coordinates = coordinates;

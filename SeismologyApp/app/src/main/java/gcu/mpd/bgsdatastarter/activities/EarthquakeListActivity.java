@@ -42,9 +42,11 @@ public class EarthquakeListActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Earthquake> earthquakes) {
                 adapter.setEarthquakes(earthquakes);
-                LocalDate localDate = LocalDate.of(2019, 03, 30);
+                LocalDate localDate = LocalDate.of(2019, 03, 22);
+                LocalDate localDate2 = LocalDate.of(2019, 04, 1);
                 List<Earthquake> quakes = viewModel.getEarthquakesByDate(localDate);
-                System.out.println(quakes);
+                List<Earthquake> quakes2 = viewModel.getEarthquakesBetweenDates(localDate, localDate2);
+                System.out.println(quakes2);
             }
         });
 

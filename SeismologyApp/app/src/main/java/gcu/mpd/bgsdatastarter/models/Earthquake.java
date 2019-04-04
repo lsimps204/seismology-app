@@ -104,4 +104,10 @@ public class Earthquake
         this.magnitude = magnitude;
     }
 
+
+    @Override
+    public String toString() {
+        return this.title;
+    }
+
 }

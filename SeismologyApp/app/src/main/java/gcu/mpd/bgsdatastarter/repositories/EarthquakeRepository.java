@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,7 +66,7 @@ public class EarthquakeRepository {
         String endDate = end.format(fmt);
         List<Earthquake> quakesBetweenDates = new ArrayList<>();
         for (Earthquake quake : this.allEarthquakes.getValue()) {
-            quakeDate = quake.getPubDate().toLocalDate();
+            LocalDate quakeDate = quake.getPubDate().toLocalDate();
             if (quakeDate.isAfter(start) && quakeDate.isBefore(end)) {
                 quakesBetweenDates.add(quake);
             }
@@ -130,21 +131,21 @@ public class EarthquakeRepository {
         return Collections.max(this.allEarthquakes.getValue(), cmp);
     }
 
-    public Entry<String, List<Earthquake>> getDayWithMostQuakes() {
+    public Map.Entry<String, List<Earthquake>> getDayWithMostQuakes() {
         HashMap<String, List<Earthquake>> groupedQuakes = this.groupEarthquakesByDate();
         return this.findMostCommon(groupedQuakes);
     }
 
 
-    public Entry<String, List<Earthquake>> getCountyWithMostQuakes() {
+    public Map.Entry<String, List<Earthquake>> getCountyWithMostQuakes() {
         HashMap<String, List<Earthquake>> groupedQuakes = this.groupEarthquakesByCounty();
         return this.findMostCommon(groupedQuakes);
     }
 
-    private Entry<String, List<Earthquake>> findMostCommon(HashMap<String, List<Earthquake>> groupedQuakes) {
-        Entry<String, List<Earthquake>> maxEntry = null;
+    private Map.Entry<String, List<Earthquake>> findMostCommon(HashMap<String, List<Earthquake>> groupedQuakes) {
+        Map.Entry<String, List<Earthquake>> maxEntry = null;
 
-        for (Entry<String, List<Earthquake>> entry : groupedQuakes.entrySet()) {
+        for (Map.Entry<String, List<Earthquake>> entry : groupedQuakes.entrySet()) {
             if (maxEntry == null || entry.getValue().size() > maxEntry.getValue().size()) {
                 maxEntry = entry;
             }
@@ -154,7 +155,7 @@ public class EarthquakeRepository {
 
     private HashMap<String, List<Earthquake>> groupEarthquakesByDate() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        HashMap<String, List<Earthquakes>> quakesByDate = new HashMap<>();
+        HashMap<String, List<Earthquake>> quakesByDate = new HashMap<>();
         for (Earthquake quake : this.allEarthquakes.getValue()) {
             String quakeDate = quake.getPubDate().toLocalDate().format(fmt);
             List<Earthquake> quakes = quakesByDate.get(quakeDate);
@@ -168,7 +169,7 @@ public class EarthquakeRepository {
     }
 
     private HashMap<String, List<Earthquake>> groupEarthquakesByCounty() {
-        HashMap<String, List<Earthquakes>> quakesByCounty = new HashMap<>();
+        HashMap<String, List<Earthquake>> quakesByCounty = new HashMap<>();
         for (Earthquake quake : this.allEarthquakes.getValue()) {
             String county = quake.getLocation().getCounty();
             if (county == null) continue;

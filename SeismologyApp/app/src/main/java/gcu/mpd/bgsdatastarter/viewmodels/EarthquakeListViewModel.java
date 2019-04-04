@@ -32,6 +32,10 @@ public class EarthquakeListViewModel extends AndroidViewModel {
         return repository.getEarthquakesByDate(date);
     }
 
+    public List<Earthquake> getEarthquakesBetweenDates(LocalDate d1, LocalDate d2){
+        return repository.getEarthquakesBetweenDates(d1, d2);
+    }
+
     public void deleteAll() {
         repository.deleteAllEarthquakes();
     }

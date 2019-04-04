@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
@@ -34,6 +35,18 @@ public class EarthquakeListViewModel extends AndroidViewModel {
 
     public List<Earthquake> getEarthquakesBetweenDates(LocalDate d1, LocalDate d2){
         return repository.getEarthquakesBetweenDates(d1, d2);
+    }
+
+    public Earthquake getHighestMagn(){
+        return repository.getHighestMagnitude();
+    }
+
+    public HashMap<String,Integer> groupByHour(){
+        return repository.earthquakesPerHour();
+    }
+
+    public HashMap<String, Integer> groupByDay() {
+        return repository.earthquakesPerDay();
     }
 
     public void deleteAll() {

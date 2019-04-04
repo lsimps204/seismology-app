@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
@@ -87,10 +89,20 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
         // first, build the location string and populate text-item
         String locationStr = earthquake.getLocation().getTown();
         if (earthquake.getLocation().getCounty() != null) {
-            locationStr += " " + earthquake.getLocation().getCounty();
+            locationStr += ", " + earthquake.getLocation().getCounty();
         }
-        locationStr = locationStr.substring(0, 1).toUpperCase() + locationStr.substring(1).toLowerCase();
-        viewHolder.location.setText(locationStr);
+        StringBuilder location = new StringBuilder();
+        location.append(locationStr.substring(0,1).toUpperCase());
+        //locationStr = locationStr.substring(0, 1).toUpperCase() + locationStr.substring(1).toLowerCase();
+
+        for (int i=1; i < locationStr.length(); i++) {
+            char c = Character.toLowerCase(locationStr.charAt(i));
+            if (locationStr.charAt(i-1) == ' ') {
+                c = Character.toUpperCase(c);
+            }
+            location.append(c);
+        }
+        viewHolder.location.setText(location.toString());
         viewHolder.magnitude.setText(Float.toString(earthquake.getMagnitude()));
 
         // set the colour of the background in circle displaying magnitude
@@ -99,7 +111,8 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
         magCircle.setColor(getMagnitudeColor(earthquake.getMagnitude()));
 
         // Set the data and time fields in the view
-        viewHolder.date.setText(earthquake.getPubDate().toString());
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("d MMMM, y");
+        viewHolder.date.setText(earthquake.getPubDate().toLocalDate().format(fmt));
         viewHolder.time.setText(earthquake.getPubDate().toLocalTime().toString());
 
         // Set the depth

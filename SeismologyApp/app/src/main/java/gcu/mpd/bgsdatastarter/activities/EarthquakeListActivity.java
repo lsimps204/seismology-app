@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
@@ -44,12 +45,13 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 adapter.setEarthquakes(earthquakes);
                 LocalDate localDate = LocalDate.of(2019, 03, 22);
                 LocalDate localDate2 = LocalDate.of(2019, 04, 1);
-                List<Earthquake> quakes = viewModel.getEarthquakesByDate(localDate);
+                //List<Earthquake> quakes = viewModel.getEarthquakesByDate(localDate);
                 List<Earthquake> quakes2 = viewModel.getEarthquakesBetweenDates(localDate, localDate2);
-                System.out.println(quakes2);
+                //HashMap<String, Integer> map = viewModel.groupByHour();
+                HashMap<String, Integer> map = viewModel.groupByDay();
+                System.out.println("Qukess: " + quakes2);
             }
         });
-
     }
 
     private void initRecyclerView() {

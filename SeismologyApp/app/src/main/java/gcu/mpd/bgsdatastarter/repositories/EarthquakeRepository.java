@@ -8,7 +8,9 @@ import android.util.Log;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,13 +63,13 @@ public class EarthquakeRepository {
     }
 
     public List<Earthquake> getEarthquakesBetweenDates(LocalDate start, LocalDate end) {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String startDate = start.format(fmt);
-        String endDate = end.format(fmt);
+        //DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = start.minusDays(1);
+        LocalDate endDate = end.plusDays(1);
         List<Earthquake> quakesBetweenDates = new ArrayList<>();
         for (Earthquake quake : this.allEarthquakes.getValue()) {
             LocalDate quakeDate = quake.getPubDate().toLocalDate();
-            if (quakeDate.isAfter(start) && quakeDate.isBefore(end)) {
+            if (quakeDate.isAfter(startDate) && quakeDate.isBefore(endDate)) {
                 quakesBetweenDates.add(quake);
             }
         }
@@ -166,6 +168,30 @@ public class EarthquakeRepository {
             quakesByDate.put(quakeDate, quakes);
         }
         return quakesByDate;
+    }
+
+    public HashMap<String, Integer> earthquakesPerHour() {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("H:M:s");
+        HashMap<String, Integer> countPerHour = new HashMap<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            String quakeDate = quake.getPubDate().toLocalTime().truncatedTo(ChronoUnit.HOURS).toString();
+            int count = countPerHour.getOrDefault(quakeDate, 0);
+            count++;
+            countPerHour.put(quakeDate, count);
+        }
+        return countPerHour;
+    }
+
+    public HashMap<String, Integer> earthquakesPerDay() {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        HashMap<String, Integer> countPerDay = new HashMap<>();
+        for (Earthquake quake : this.allEarthquakes.getValue()) {
+            String quakeDate = quake.getPubDate().toLocalDate().toString();
+            int count = countPerDay.getOrDefault(quakeDate, 0);
+            count++;
+            countPerDay.put(quakeDate, count);
+        }
+        return countPerDay;
     }
 
     private HashMap<String, List<Earthquake>> groupEarthquakesByCounty() {

@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +23,14 @@ import java.util.List;
 import gcu.mpd.bgsdatastarter.R;
 import gcu.mpd.bgsdatastarter.models.Earthquake;
 
-public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.ViewHolder> {
+public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.ViewHolder> implements Filterable {
 
     private static final String TAG = "EarthquakeAdapter";
 
     // Holds list of earthquakes
     private List<Earthquake> earthquakes = new ArrayList<>();
+    private List<Earthquake> earthquakesCopy;
+    private TextView resultCount;
     private Context context;
 
     // Constructor: pass in the list of earthquakes and set local variable
@@ -137,8 +141,52 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
     public void setEarthquakes(List<Earthquake> earthquakes) {
         Log.e("COUNT: ", Integer.toString(earthquakes.size()));
         this.earthquakes = earthquakes;
+        this.earthquakesCopy = new ArrayList<>(this.earthquakes);
         notifyDataSetChanged();
     }
+
+    @Override
+    public Filter getFilter(){
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Earthquake> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(earthquakesCopy);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Earthquake quake : earthquakesCopy) {
+                    if (containsPattern(quake, filterPattern)) {
+                        filteredList.add(quake);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            earthquakes.clear();
+            earthquakes.addAll((List<Earthquake>) results.values);
+            notifyDataSetChanged();
+        }
+
+        private boolean containsPattern(Earthquake quake, String filterPattern) {
+            String town = quake.getLocation().getTown().toLowerCase().trim();
+            String county = quake.getLocation().getCounty();
+            if (county != null)
+                county = county.toLowerCase().trim();
+            else
+                county = "";
+
+            return (town.contains(filterPattern) || county.contains(filterPattern));
+        }
+    };
 
     private int getMagnitudeColor(double magnitude) {
 

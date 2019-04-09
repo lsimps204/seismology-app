@@ -17,10 +17,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private Button deleteButton;
     private ProgressBar spinner;
     private EarthquakeListViewModel earthquakeListViewModel;
+    private BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         startButton = (Button)findViewById(R.id.startButton);
         deleteButton = (Button)findViewById(R.id.deleteAll);
         spinner = (ProgressBar)findViewById(R.id.progressBar1);
+
         startButton.setOnClickListener(this);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             }
         });
     }
+
 
     // Button click handler - fetches the data from the API
     public void onClick(View aview)

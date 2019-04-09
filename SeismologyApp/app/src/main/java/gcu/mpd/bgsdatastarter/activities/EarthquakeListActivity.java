@@ -3,8 +3,11 @@ package gcu.mpd.bgsdatastarter.activities;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,8 +38,8 @@ public class EarthquakeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_list_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        nav.setOnNavigationItemSelectedListener(navListener);
 
         initRecyclerView();
 
@@ -57,6 +60,35 @@ public class EarthquakeListActivity extends AppCompatActivity {
             }
         });
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch(menuItem.getItemId()) {
+                        case R.id.nav_list:
+//                            Intent a = new Intent(MainActivity.this, EarthquakeListActivity.class);
+//                            startActivity(a);
+                            break;
+
+                        case R.id.nav_map:
+                            Intent intent = new Intent(EarthquakeListActivity.this, EarthquakeMapActivity.class);
+                            startActivity(intent);
+                            break;
+
+                        case R.id.nav_search:
+                            break;
+
+                        case R.id.nav_graph:
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    return false;
+                }
+            };
 
     private void initRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.earthquake_recyclerview);

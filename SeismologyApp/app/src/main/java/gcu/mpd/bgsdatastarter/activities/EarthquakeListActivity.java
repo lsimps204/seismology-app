@@ -38,8 +38,15 @@ public class EarthquakeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_list_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setOnNavigationItemSelectedListener(navListener);
+
+        Menu menu = nav.getMenu();
+        MenuItem mItem = menu.getItem(0);
+        mItem.setChecked(true);
 
         initRecyclerView();
 
@@ -80,6 +87,8 @@ public class EarthquakeListActivity extends AppCompatActivity {
                             break;
 
                         case R.id.nav_graph:
+                            Intent intent4 = new Intent(EarthquakeListActivity.this, EarthquakeGraphActivity.class);
+                            startActivity(intent4);
                             break;
 
                         default:

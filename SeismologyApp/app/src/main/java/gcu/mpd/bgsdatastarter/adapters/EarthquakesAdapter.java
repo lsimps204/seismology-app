@@ -1,6 +1,7 @@
 package gcu.mpd.bgsdatastarter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
+import gcu.mpd.bgsdatastarter.activities.EarthquakeDetailActivity;
 import gcu.mpd.bgsdatastarter.models.Earthquake;
 
 public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.ViewHolder> implements Filterable {
@@ -82,7 +84,7 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
 
     // The onBindViewHolder method populates data into the item through holder
     @Override
-    public void onBindViewHolder(EarthquakesAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final EarthquakesAdapter.ViewHolder viewHolder, int position) {
         Log.d(TAG, "onBindViewHolder called");
 
         // Get the data model based on position within the arraylist
@@ -99,7 +101,7 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
         magCircle.setColor(getMagnitudeColor(earthquake.getMagnitude()));
 
         // Set the data and time fields in the view
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("d MMMM, y");
+        final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("d MMMM, y");
         viewHolder.date.setText(earthquake.getPubDate().toLocalDate().format(fmt));
         viewHolder.time.setText(earthquake.getPubDate().toLocalTime().toString());
 
@@ -112,7 +114,17 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, earthquake.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, EarthquakeDetailActivity.class);
+                intent.putExtra("title", earthquake.getTitle());
+                intent.putExtra("location", earthquake.getLocation().toString());
+                intent.putExtra("link", earthquake.getLink());
+                intent.putExtra("magnitude", earthquake.getMagnitude());
+                intent.putExtra("depth", earthquake.getDepth());
+                intent.putExtra("date", earthquake.getPubDate().toLocalDate().format(fmt));
+                intent.putExtra("time", earthquake.getPubDate().toLocalTime().toString());
+                intent.putExtra("latitude", earthquake.getLocation().getCoordinates().getLat());
+                intent.putExtra("longitude", earthquake.getLocation().getCoordinates().getLon());
+                context.startActivity(intent);
             }
         });
     }
@@ -158,7 +170,6 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
         protected void publishResults(CharSequence constraint, FilterResults results) {
             earthquakes.clear();
             earthquakes.addAll((List<Earthquake>) results.values);
-            Log.d(TAG, earthquakes.toString());
             notifyDataSetChanged();
         }
 

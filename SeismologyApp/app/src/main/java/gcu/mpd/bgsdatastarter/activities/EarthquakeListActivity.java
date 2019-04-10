@@ -76,8 +76,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch(menuItem.getItemId()) {
                         case R.id.nav_list:
-//                            Intent a = new Intent(MainActivity.this, EarthquakeListActivity.class);
-//                            startActivity(a);
                             break;
 
                         case R.id.nav_map:
@@ -115,6 +113,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(getResources().getString(R.string.search_placeholder));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

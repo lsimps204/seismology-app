@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Seismology App</string>
     <string name="action_settings">Settings</string>
+
+    <string name="earthquake_location">Location</string>
+    <string name="earthquake_magnitude">Magnitude</string>
+    <string name="earthquake_date">Date</string>
+    <string name="earthquake_time">Time</string>
+    <string name="earthquake_depth">Depth</string>
+    <string name="earthquake_coordinates">Coordinates</string>
+    <string name="earthquake_link">Link</string>
+    <string name="earthquake_details">Details</string>
+
+
+    <string name="search_placeholder">Enter a location</string>
 </resources>

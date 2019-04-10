@@ -115,13 +115,6 @@ public class EarthquakeMapActivity extends AppCompatActivity implements OnMapRea
         });
     }
 
-//    private void addMarker(Coordinates coords) {
-//        LatLng position = new LatLng(coords.getLat(), coords.getLon());
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(position);
-//        mGoogleMap.addMarker(markerOptions);
-//    }
-
     private void setMapMarkers(List<Earthquake> earthquakes) {
         for (Earthquake quake : earthquakes) {
             Coordinates location = quake.getLocation().getCoordinates();

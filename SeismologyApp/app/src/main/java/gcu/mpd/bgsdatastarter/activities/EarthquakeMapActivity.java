@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
@@ -102,7 +103,9 @@ public class EarthquakeMapActivity extends AppCompatActivity implements OnMapRea
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mGoogleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
-        mGoogleMap.setMinZoomPreference(6);
+        mGoogleMap.setMinZoomPreference(5);
+        LatLng glasgow = new LatLng(55.8642, -4.2518);
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(glasgow, 4.0f));
 
         viewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
             @Override
@@ -110,24 +113,26 @@ public class EarthquakeMapActivity extends AppCompatActivity implements OnMapRea
                 setMapMarkers(earthquakes);
             }
         });
-//        LatLng position = makeLatLng(geoLat,geoLong);
+    }
+
+//    private void addMarker(Coordinates coords) {
+//        LatLng position = new LatLng(coords.getLat(), coords.getLon());
 //        MarkerOptions markerOptions = new MarkerOptions();
 //        markerOptions.position(position);
 //        mGoogleMap.addMarker(markerOptions);
-
-    }
-
-    private void addMarker(Coordinates coords) {
-        LatLng position = new LatLng(coords.getLat(), coords.getLon());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(position);
-        mGoogleMap.addMarker(markerOptions);
-    }
+//    }
 
     private void setMapMarkers(List<Earthquake> earthquakes) {
         for (Earthquake quake : earthquakes) {
             Coordinates location = quake.getLocation().getCoordinates();
-            addMarker(location);
+            LatLng position = new LatLng(location.getLat(), location.getLon());
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("d MMMM, y");
+            String date = quake.getPubDate().toLocalDate().format(fmt);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(position)
+                .title(quake.getLocation().toString())
+                .snippet(date);
+            mGoogleMap.addMarker(markerOptions);
         }
     }
 

@@ -32,6 +32,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
     private EarthquakeListViewModel viewModel;
     private EarthquakesAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        recyclerView = (RecyclerView) findViewById(R.id.earthquake_recyclerview);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setOnNavigationItemSelectedListener(navListener);
@@ -100,7 +102,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
             };
 
     private void initRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.earthquake_recyclerview);
         recyclerView.setHasFixedSize(true);
         adapter = new EarthquakesAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -124,6 +125,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
+                recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView,null, 0);
                 return false;
             }
         });

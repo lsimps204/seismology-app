@@ -50,6 +50,20 @@ public class Location {
 
     @Override
     public String toString() {
-        return this.town + ", " + this.county + " (" + this.coordinates + ")";
+        String location = this.getTown();
+        if (this.getCounty() != null) {
+            location += ", " + this.getCounty();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(location.substring(0,1).toUpperCase());
+
+        for (int i=1; i < location.length(); i++) {
+            char c = Character.toLowerCase(location.charAt(i));
+            if (location.charAt(i-1) == ' ') {
+                c = Character.toUpperCase(c);
+            }
+            sb.append(c);
+        }
+        return sb.toString().trim();
     }
 }

@@ -90,23 +90,7 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
 
         // Set item views based on your views and data model
 
-        // first, build the location string and populate text-item
-        String locationStr = earthquake.getLocation().getTown();
-        if (earthquake.getLocation().getCounty() != null) {
-            locationStr += ", " + earthquake.getLocation().getCounty();
-        }
-        StringBuilder location = new StringBuilder();
-        location.append(locationStr.substring(0,1).toUpperCase());
-        //locationStr = locationStr.substring(0, 1).toUpperCase() + locationStr.substring(1).toLowerCase();
-
-        for (int i=1; i < locationStr.length(); i++) {
-            char c = Character.toLowerCase(locationStr.charAt(i));
-            if (locationStr.charAt(i-1) == ' ') {
-                c = Character.toUpperCase(c);
-            }
-            location.append(c);
-        }
-        viewHolder.location.setText(location.toString());
+        viewHolder.location.setText(earthquake.getLocation().toString());
         viewHolder.magnitude.setText(Float.toString(earthquake.getMagnitude()));
 
         // set the colour of the background in circle displaying magnitude
@@ -166,6 +150,7 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
             }
             FilterResults results = new FilterResults();
             results.values = filteredList;
+            results.count = filteredList.size();
             return results;
         }
 
@@ -173,18 +158,13 @@ public class EarthquakesAdapter extends RecyclerView.Adapter<EarthquakesAdapter.
         protected void publishResults(CharSequence constraint, FilterResults results) {
             earthquakes.clear();
             earthquakes.addAll((List<Earthquake>) results.values);
+            Log.d(TAG, earthquakes.toString());
             notifyDataSetChanged();
         }
 
         private boolean containsPattern(Earthquake quake, String filterPattern) {
-            String town = quake.getLocation().getTown().toLowerCase().trim();
-            String county = quake.getLocation().getCounty();
-            if (county != null)
-                county = county.toLowerCase().trim();
-            else
-                county = "";
-
-            return (town.contains(filterPattern) || county.contains(filterPattern));
+            String location = quake.getLocation().toString().toLowerCase();
+            return location.contains(filterPattern.toLowerCase());
         }
     };
 

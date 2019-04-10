@@ -6,12 +6,14 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/earthquake_recyclerview">
+        android:id="@+id/earthquake_recyclerview"
+        android:layout_marginTop="60dp">
 
     </android.support.v7.widget.RecyclerView>
 

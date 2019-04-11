@@ -53,17 +53,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         setContentView(R.layout.activity_main);
         // Set up the raw links to the graphical components
         startButton = (Button)findViewById(R.id.startButton);
-        deleteButton = (Button)findViewById(R.id.deleteAll);
         spinner = (ProgressBar)findViewById(R.id.progressBar1);
         spinner.setVisibility(View.INVISIBLE);
 
         startButton.setOnClickListener(this);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                earthquakeListViewModel.deleteAll();
-            }
-        });
+        //earthquakeListViewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
+
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                earthquakeListViewModel.deleteAll();
+//            }
+//        });
     }
 
 

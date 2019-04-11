@@ -37,12 +37,9 @@ public class EarthquakeRepository {
         earthquakeDao = db.earthquakeDao();
     }
 
+    // gets number of earthquakes that've been recovered from the API
     public int getEarthquakeCount() {
         return this.allEarthquakes.getValue().size();
-    }
-
-    public List<Earthquake> getQuakesAsList(){
-        return this.allEarthquakes.getValue();
     }
 
     // Retrieves all the earthquakes
@@ -75,37 +72,44 @@ public class EarthquakeRepository {
         }
     }
 
-    /* Ordering methods */
+    /***** Ordering methods *****/
+
+    /* Orders earthquakes by date */
     public List<Earthquake> orderByMostRecent() {
         List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
         Collections.sort(copy, dateDescendingComparator);
         return copy;
     }
 
+    /* Orders earthquakes by location (alphabetical) */
     public List<Earthquake> orderByLocation() {
         List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
         Collections.sort(copy, locationAscendingComparator);
         return copy;
     }
 
+    /* Orders earthquakes by magnitude */
     public List<Earthquake> orderByMagnitude() {
         List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
         Collections.sort(copy, magnitudeAscendingComparator);
         return copy;
     }
 
+    /* Orders earthquakes by depth */
     public List<Earthquake> orderByDepth() {
         List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
         Collections.sort(copy, depthAscendingComparator);
         return copy;
     }
 
+    /* Orders earthquakes by location (north -> south) */
     public List<Earthquake> orderByMostNorthern() {
         List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
         Collections.sort(copy, mostNorthernComparator);
         return copy;
     }
 
+    /* Orders earthquakes by location (west -> east) */
     public List<Earthquake> orderByMostWestern() {
         List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
         Collections.sort(copy, mostWesternComparator);
@@ -113,7 +117,7 @@ public class EarthquakeRepository {
     }
 
 
-    /* Filtering methods */
+    /****** Filtering methods *****/
     public List<Earthquake> getEarthquakesByDate(LocalDate date) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateToCheck = date.format(fmt);

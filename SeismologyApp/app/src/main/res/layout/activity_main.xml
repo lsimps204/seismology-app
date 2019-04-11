@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical"
             >
 
@@ -23,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="25dp"
                 android:text="Earthquake Tracker"
-                android:textSize="28dp"
+                android:textSize="38dp"
                 android:gravity="center"
                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                 />
@@ -38,17 +39,13 @@
                 android:layout_gravity="center"
                 android:text="Start application"
                 />
-            <Button
-                android:id="@+id/deleteAll"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:text="Delete"
-                />
+
             <TextView
                 android:id="@+id/acknowledgement"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="30dp"
                 android:textSize="20sp"
                 android:text="Contains British Geological Survey materials ©NERC 2019"
                 />

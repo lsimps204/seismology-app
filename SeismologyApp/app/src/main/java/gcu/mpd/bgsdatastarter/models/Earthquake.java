@@ -9,8 +9,15 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 
-/* Model/POJO to represent individual Earthquake data */
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
 
+/* Model/POJO to represent individual Earthquake data */
 @Entity(tableName = "earthquakes")
 public class Earthquake
 {

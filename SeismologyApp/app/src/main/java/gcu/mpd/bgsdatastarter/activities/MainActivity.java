@@ -37,6 +37,15 @@ import gcu.mpd.bgsdatastarter.R;
 import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.viewmodels.EarthquakeListViewModel;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
+/* Application landing page */
 public class MainActivity extends AppCompatActivity implements OnClickListener
 {
     private TextView rawDataDisplay;

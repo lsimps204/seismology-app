@@ -1,5 +1,14 @@
 package gcu.mpd.bgsdatastarter.models;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
+/* Coordinate model/POJO representing geographical coordinates (latitude and longitude) */
 public class Coordinates {
 
     private float lat;

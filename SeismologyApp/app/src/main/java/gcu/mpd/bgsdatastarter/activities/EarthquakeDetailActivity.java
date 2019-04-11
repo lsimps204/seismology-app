@@ -21,6 +21,15 @@ import java.time.format.DateTimeFormatter;
 
 import gcu.mpd.bgsdatastarter.R;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
+/* Activity which shows details of an individual earthquake */
 public class EarthquakeDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "EarthquakeDetailActivity";
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";

@@ -7,9 +7,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.DatePicker;
-
 import java.util.Calendar;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
+/* Fragment which shows the DatePicker widget */
 public class DateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private static final String TAG = "DatePickerFragment";
 

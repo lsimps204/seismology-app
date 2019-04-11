@@ -25,6 +25,14 @@ import gcu.mpd.bgsdatastarter.models.database.EarthquakeDatabase;
 import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
 import gcu.mpd.bgsdatastarter.network.WebService;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
 /* The Repository class mediates between the ViewModel on the front-end, and the data sources on the back end.
 *  The repository hides data fetching details, from both the SQLite database, and the remote XML API */
 public class EarthquakeRepository {

@@ -12,6 +12,14 @@ import java.util.List;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
 @Dao
 public interface EarthquakeDao {
 

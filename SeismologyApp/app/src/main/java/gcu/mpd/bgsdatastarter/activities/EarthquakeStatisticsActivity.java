@@ -23,6 +23,15 @@ import gcu.mpd.bgsdatastarter.R;
 import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.viewmodels.EarthquakeListViewModel;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
+/* Activity which shows various summary statistics on the earthquakes collected */
 public class EarthquakeStatisticsActivity extends AppCompatActivity {
     private final String TAG = "EarthquakeStatsActivity";
     private EarthquakeListViewModel viewModel;
@@ -36,7 +45,6 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
-        Lc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_stats);
 

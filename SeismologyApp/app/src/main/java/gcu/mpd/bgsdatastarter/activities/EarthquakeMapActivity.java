@@ -30,6 +30,16 @@ import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.models.Location;
 import gcu.mpd.bgsdatastarter.viewmodels.EarthquakeListViewModel;
 
+
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
+/* Activity which shows all earthquakes on a map */
 public class EarthquakeMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "EarthquakeMapActivity";
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";

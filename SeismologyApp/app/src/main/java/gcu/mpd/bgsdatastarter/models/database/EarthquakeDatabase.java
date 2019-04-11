@@ -13,6 +13,14 @@ import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.models.TypeConverters.DateConverter;
 import gcu.mpd.bgsdatastarter.models.daos.EarthquakeDao;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
 @Database(entities={Earthquake.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class EarthquakeDatabase extends RoomDatabase {

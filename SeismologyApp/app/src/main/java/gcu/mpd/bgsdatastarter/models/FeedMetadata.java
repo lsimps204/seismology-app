@@ -2,8 +2,13 @@ package gcu.mpd.bgsdatastarter.models;
 
 import java.time.LocalDateTime;
 
-//import androidx.room.Entity;
-//import androidx.room.PrimaryKey;
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
 
 //@Entity(tableName = "metadata")
 public class FeedMetadata {

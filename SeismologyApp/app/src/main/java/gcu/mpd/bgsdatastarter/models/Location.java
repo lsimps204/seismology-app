@@ -1,10 +1,17 @@
 package gcu.mpd.bgsdatastarter.models;
 
-//import androidx.room.Embedded;
-
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
 
 @Entity(tableName = "location")
 public class Location {

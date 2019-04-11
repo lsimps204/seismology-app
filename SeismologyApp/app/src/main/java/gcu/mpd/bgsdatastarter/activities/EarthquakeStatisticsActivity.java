@@ -12,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +20,6 @@ import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
 import gcu.mpd.bgsdatastarter.models.Earthquake;
-import gcu.mpd.bgsdatastarter.models.EarthquakeStatisticsView;
 import gcu.mpd.bgsdatastarter.viewmodels.EarthquakeListViewModel;
 
 public class EarthquakeStatisticsActivity extends AppCompatActivity {

@@ -52,25 +52,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Set up the raw links to the graphical components
-        rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
         startButton = (Button)findViewById(R.id.startButton);
         deleteButton = (Button)findViewById(R.id.deleteAll);
         spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.INVISIBLE);
 
         startButton.setOnClickListener(this);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 earthquakeListViewModel.deleteAll();
-            }
-        });
-
-        // More Code goes here
-        earthquakeListViewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
-        earthquakeListViewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
-            @Override
-            public void onChanged(@Nullable List<Earthquake> earthquakes) {
-                System.out.println(earthquakes);
             }
         });
     }
@@ -80,9 +71,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     public void onClick(View aview)
     {
         spinner.setVisibility(View.VISIBLE);
-        Log.e("COUNT: ", Integer.toString(earthquakeListViewModel.getCount()));
-        rawDataDisplay.setText(earthquakeListViewModel.getEarthquakes().toString());
         Intent myIntent = new Intent(getBaseContext(), EarthquakeListActivity.class);
+        myIntent.putExtra("firstRun", true);
         startActivity(myIntent);
     }
 

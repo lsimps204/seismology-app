@@ -3,22 +3,14 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/mag1">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-
-        <TextView
-            android:id="@+id/salutation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Welcome to Mobile Platform Development"
-            android:layout_marginVertical="25dp"
-            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,15 +21,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Earthquake Finder"
+                android:layout_marginVertical="25dp"
+                android:text="Earthquake Tracker"
+                android:textSize="28dp"
                 android:gravity="center"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
                 />
 
             <Button
                 android:id="@+id/startButton"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Press to get data"
+                android:padding="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/mag2"
+                android:layout_gravity="center"
+                android:text="Start application"
                 />
             <Button
                 android:id="@+id/deleteAll"
@@ -52,13 +51,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="Contains British Geological Survey materials ©NERC 2019"
-                />
-            <TextView
-                android:id="@+id/rawDataDisplay"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Raw Data is Displayed here"
                 />
         </LinearLayout>
 

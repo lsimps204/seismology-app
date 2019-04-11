@@ -1,30 +1,25 @@
 package gcu.mpd.bgsdatastarter.repositories;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
-import gcu.mpd.bgsdatastarter.models.EarthquakeStatisticsView;
 import gcu.mpd.bgsdatastarter.models.daos.EarthquakeDao;
 import gcu.mpd.bgsdatastarter.models.database.EarthquakeDatabase;
 import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
@@ -64,6 +59,7 @@ public class EarthquakeRepository {
     // Uses the ExecutorService to run the callable WebService on a new Thread
     public void fetchRemoteData() {
         Log.e(MYTAG, "Fetching data from the remote API");
+        this.deleteAllEarthquakes();
         ExecutorService service = Executors.newSingleThreadExecutor();
         WebService ws = new WebService();
         Future<String> future = service.submit(ws);

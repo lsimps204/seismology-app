@@ -3,18 +3,15 @@ package gcu.mpd.bgsdatastarter.viewmodels;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
-import gcu.mpd.bgsdatastarter.models.EarthquakeStatisticsView;
 import gcu.mpd.bgsdatastarter.repositories.EarthquakeRepository;
 
 public class EarthquakeListViewModel extends AndroidViewModel {
@@ -103,6 +100,10 @@ public class EarthquakeListViewModel extends AndroidViewModel {
         List<Earthquake> quakesOrdered = repository.orderByMostWestern();
         Collections.reverse(quakesOrdered);
         return quakesOrdered;
+    }
+
+    public void refreshData() {
+        repository.fetchRemoteData();
     }
 
     public Earthquake getHighestMagn(){

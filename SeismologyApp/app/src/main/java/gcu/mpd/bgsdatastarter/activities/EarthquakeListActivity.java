@@ -58,6 +58,11 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
 
+        Bundle passedDataBundle = getIntent().getExtras();
+        if (passedDataBundle != null && passedDataBundle.containsKey("firstRun")) {
+            viewModel.deleteAll();
+            viewModel.refreshData();
+        }
         // observe any changes to the list
         viewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
             @Override
@@ -202,6 +207,11 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 Log.d(TAG, "onOptionsItemSelected: most eastern ordering chosen");
                 adapter.setEarthquakes(viewModel.orderByMostEastern());
                 adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.refresh_data:
+                Log.d(TAG, "onOptionsItemSelected: Refreshing data from API");
+                viewModel.refreshData();
                 break;
         }
         return false;

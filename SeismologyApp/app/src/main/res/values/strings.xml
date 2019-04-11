@@ -13,4 +13,5 @@
 
 
     <string name="search_placeholder">Enter a location</string>
+    <string name="datepicker">Select a date</string>
 </resources>

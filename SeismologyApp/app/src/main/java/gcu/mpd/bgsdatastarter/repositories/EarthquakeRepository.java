@@ -50,6 +50,21 @@ public class EarthquakeRepository {
         return this.allEarthquakes;
     }
 
+    /* Ordering methods */
+    public List<Earthquake> orderByMostRecent() {
+        List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
+        Collections.sort(copy, dateDescendingComparator);
+        return copy;
+    }
+
+    public List<Earthquake> orderByLocation() {
+        List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
+        Collections.sort(copy, locationAscendingComparator);
+        return copy;
+    }
+
+
+    /* Filtering methods */
     public List<Earthquake> getEarthquakesByDate(LocalDate date) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateToCheck = date.format(fmt);
@@ -290,4 +305,24 @@ public class EarthquakeRepository {
             return dao.count();
         }
     }
+
+    /* Comparators */
+    Comparator<Earthquake> dateDescendingComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake e1, Earthquake e2) {
+            LocalDateTime mag1 = e1.getPubDate();
+            LocalDateTime mag2 = e2.getPubDate();
+            return mag2.compareTo(mag1);
+        }
+    };
+
+    Comparator<Earthquake> locationAscendingComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake e1, Earthquake e2) {
+            String mag1 = e1.getLocation().getTown();
+            String mag2 = e2.getLocation().getTown();
+            return mag1.compareTo(mag2);
+        }
+    };
+
 }

@@ -82,10 +82,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         spinner.setVisibility(View.VISIBLE);
         Log.e("COUNT: ", Integer.toString(earthquakeListViewModel.getCount()));
         rawDataDisplay.setText(earthquakeListViewModel.getEarthquakes().toString());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e){}
-        spinner.setVisibility(View.INVISIBLE);
         Intent myIntent = new Intent(getBaseContext(), EarthquakeListActivity.class);
         startActivity(myIntent);
     }

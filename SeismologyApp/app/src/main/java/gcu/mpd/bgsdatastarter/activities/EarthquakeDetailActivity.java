@@ -64,7 +64,7 @@ public class EarthquakeDetailActivity extends AppCompatActivity implements OnMap
         // set text values
         locationView.setText(location);
         magnitudeView.setText("Magnitude: " + Float.toString(magnitude));
-        depthView.setText("Depth: " + Integer.toString(depth) + "km");
+        depthView.setText("Depth: " + Integer.toString(depth) + " km");
         dateView.setText("Date: " + date);
         timeView.setText("Time: " + time);
         linkView.setText("Link: " + link);
@@ -86,7 +86,7 @@ public class EarthquakeDetailActivity extends AppCompatActivity implements OnMap
         GoogleMap gmap = googleMap;
         gmap.setMapStyle(MapStyleOptions.loadRawResourceStyle(
                 this, R.raw.style_json));
-        gmap.setMinZoomPreference(5);
+        gmap.setMinZoomPreference(7);
         LatLng position = new LatLng(quakeLatitude, quakeLongitude);
 
         gmap.moveCamera(CameraUpdateFactory.newLatLng(position));

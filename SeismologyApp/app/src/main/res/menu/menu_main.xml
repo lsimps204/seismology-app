@@ -1,11 +1,66 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="gcu.mpd.bgsdatastarter.activities.MainActivity">
-    <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:showAsAction="ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+    tools:context="gcu.mpd.bgsdatastarter.activities.EarthquakeListActivity">
+    <group android:id="@+id/menu_group_top">
+        <item
+            android:id="@+id/action_search"
+            android:icon="@drawable/ic_search"
+            android:title="Search"
+            app:showAsAction="ifRoom"
+            app:actionViewClass="android.support.v7.widget.SearchView"/>
+        <item
+            android:id="@+id/datepicker"
+            android:icon="@drawable/ic_date_range"
+            android:orderInCategory="2"
+            android:title="Date"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/menu_options"
+            android:drawable="@android:color/white"
+            android:icon="@drawable/ic_filter_options"
+            android:orderInCategory="3"
+            android:title="Options"
+            app:showAsAction="ifRoom">
+        <menu>
+            <group android:id="@+id/menu_inner">
+                <item
+                    android:id="@+id/action_dateorder"
+                    android:orderInCategory="3"
+                    android:title="Sort by Date"
+                    app:showAsAction="collapseActionView">
+                    <menu>
+                        <group>
+                            <item android:id="@+id/action_most_recent"
+                                android:title="Most Recent" />
+                            <item android:id="@+id/action_least_recent"
+                                android:title="Least Recent"/>
+                        </group>
+                    </menu>
+
+                </item>
+
+                <item
+                    android:id="@+id/action_A-z"
+                    android:orderInCategory="5"
+                    android:title="Sort Alphabetically"
+                    app:showAsAction="collapseActionView">
+                    <menu>
+                        <group>
+                            <item
+                                android:id="@+id/action_alphabetical"
+                                android:title="A-Z">
+
+                            </item>
+                            <item
+                                android:id="@+id/action_alphabetical_rev"
+                                android:title="Z-A"></item>
+                        </group>
+                    </menu>
+                </item>
+            </group>
+        </menu>
+        </item>
+    </group>
 </menu>

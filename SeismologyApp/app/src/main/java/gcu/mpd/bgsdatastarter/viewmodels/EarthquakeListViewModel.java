@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +36,28 @@ public class EarthquakeListViewModel extends AndroidViewModel {
 
     public List<Earthquake> getEarthquakesBetweenDates(LocalDate d1, LocalDate d2){
         return repository.getEarthquakesBetweenDates(d1, d2);
+    }
+
+    /* Date ordering methods*/
+    public List<Earthquake> orderedMostRecent() {
+        return repository.orderByMostRecent();
+    }
+
+    public List<Earthquake> orderedLeastRecent() {
+        List<Earthquake> quakesOrdered = repository.orderByMostRecent();
+        Collections.reverse(quakesOrdered);
+        return quakesOrdered;
+    }
+
+    /* Location ordering methods */
+    public List<Earthquake> orderedByLocation() {
+        return repository.orderByLocation();
+    }
+
+    public List<Earthquake> orderByLocationReverse() {
+        List<Earthquake> quakesOrdered = repository.orderByLocation();
+        Collections.reverse(quakesOrdered);
+        return quakesOrdered;
     }
 
     public Earthquake getHighestMagn(){

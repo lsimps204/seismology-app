@@ -15,7 +15,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import gcu.mpd.bgsdatastarter.R;
@@ -32,6 +34,7 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
     TextView tvMag;
     TextView tvDateMost;
     TextView tvCountyMost;
+    TextView tvHourMost;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
@@ -50,6 +53,7 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
         tvMag = findViewById(R.id.stat_hi_magnitude);
         tvDateMost = findViewById(R.id.stat_datemost);
         tvCountyMost = findViewById(R.id.stat_county_most);
+        tvHourMost = findViewById(R.id.stat_hour_most);
 
         viewModel = ViewModelProviders.of(this).get(EarthquakeListViewModel.class);
         viewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
@@ -64,6 +68,10 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
                 String county = viewModel.countyMost().getKey();
                 String countyNum = Integer.toString(viewModel.countyMost().getValue().size());
                 tvCountyMost.setText("County with most earthquakes: " + county + " (with " + countyNum + " earthquakes");
+
+                String hourMost = formatHourString(viewModel.hourMost().getKey());
+                String hourNum = viewModel.hourMost().getValue().toString();
+                tvHourMost.setText("Hour with most earthquakes: " + hourMost + " (with " + hourNum + " earthquakes");
             }
         });
     }
@@ -74,6 +82,14 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
         LocalDate dateMost = LocalDate.of(Integer.parseInt(components[0]), Integer.parseInt(components[1]), Integer.parseInt(components[2]));
         String displayDate= dateMost.format(fmt);
         return displayDate;
+    }
+
+    private String formatHourString(String hour) {
+        LocalTime time = LocalTime.parse(hour);
+        int hourStart = time.getHour();
+        int hourEnd = time.plus(1, ChronoUnit.HOURS).getHour();
+        String timeUnit = hourStart < 12 ? "am" : "pm";
+        return String.format("%d%s-%d%s", hourStart, timeUnit, hourEnd, timeUnit);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

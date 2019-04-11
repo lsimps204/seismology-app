@@ -141,4 +141,8 @@ public class EarthquakeListViewModel extends AndroidViewModel {
         return repository.getCountyWithMostQuakes();
     }
 
+    public Map.Entry<String, Integer> hourMost() {
+        return repository.hourWithMostQuakes();
+    }
+
 }

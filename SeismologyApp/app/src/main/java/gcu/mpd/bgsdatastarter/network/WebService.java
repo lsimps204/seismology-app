@@ -10,12 +10,24 @@ import java.net.URLConnection;
 import java.security.InvalidParameterException;
 import java.util.concurrent.Callable;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
+/* This class is a Callable implementation that fetches data from the BGS XML API.
+*  It is called and used within the EarthquakeRepository class, which initiates the network call */
 public class WebService implements Callable<String> {
+    private final String TAG = "WebService";
     private String dataSource = "http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     public WebService() {}
 
     @Override
     public String call() throws InvalidParameterException {
+        Log.d(TAG, "call: Invoking web request on new thread");
         String result = "";
         URL aurl;
         URLConnection yc;
@@ -25,7 +37,7 @@ public class WebService implements Callable<String> {
         System.out.println("in run");
 
         try {
-            System.out.println("in try");
+            Log.d(TAG, "in try");
             aurl = new URL(this.dataSource);
             yc = aurl.openConnection();
 
@@ -42,7 +54,7 @@ public class WebService implements Callable<String> {
             }
             in.close();
         } catch (IOException ae) {
-            System.out.println(ae.toString());
+            Log.e(TAG, ae.toString());
         }
         return result;
     }

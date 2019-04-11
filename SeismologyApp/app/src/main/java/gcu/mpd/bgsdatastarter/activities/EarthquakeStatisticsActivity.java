@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
+        Lc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_stats);
 
@@ -56,6 +58,7 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
         viewModel.getEarthquakes().observe(this, new Observer<List<Earthquake>>() {
             @Override
             public void onChanged(@Nullable List<Earthquake> earthquakes) {
+                Log.d(TAG, "List of earthquakes has changed!");
                 tvCount.setText("Number of earthquakes: " + Integer.toString(viewModel.getCount()));
                 tvDeepest.setText("Deepest earthquake: " + viewModel.deepestQuake() + " km");
                 tvMag.setText("Highest magnitude earthquake: " + viewModel.highestMag());
@@ -64,11 +67,11 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
                 tvDateMost.setText("Date with most earthquakes: " + date + " (with " + dateNum + " earthquakes)");
                 String county = viewModel.countyMost().getKey();
                 String countyNum = Integer.toString(viewModel.countyMost().getValue().size());
-                tvCountyMost.setText("County with most earthquakes: " + county + " (with " + countyNum + " earthquakes");
+                tvCountyMost.setText("County with most earthquakes: " + county + " (with " + countyNum + " earthquakes)");
 
                 String hourMost = formatHourString(viewModel.hourMost().getKey());
                 String hourNum = viewModel.hourMost().getValue().toString();
-                tvHourMost.setText("Hour with most earthquakes: " + hourMost + " (with " + hourNum + " earthquakes");
+                tvHourMost.setText("Hour with most earthquakes: " + hourMost + " (with " + hourNum + " earthquakes)");
             }
         });
     }

@@ -23,6 +23,14 @@ import gcu.mpd.bgsdatastarter.models.Earthquake;
 import gcu.mpd.bgsdatastarter.models.FeedMetadata;
 import gcu.mpd.bgsdatastarter.models.Location;
 
+/**
+ * Mobile Platform Development Coursework 2019
+ * Name:                    Lyle Simpson
+ * Student ID:              S1436436
+ * Programme of study:      Computing
+ * 2019 April 11
+ */
+
 /* This class parses the XML data from the API into domain objects */
 public class EarthquakeXmlParser {
 
@@ -172,6 +180,7 @@ public class EarthquakeXmlParser {
     }
 
     private FeedMetadata buildMetaData() {
+        Log.d(TAG, "buildMetaData: building metadata after network API fetch");
         String title = "";
         String link = "";
         String description = "";

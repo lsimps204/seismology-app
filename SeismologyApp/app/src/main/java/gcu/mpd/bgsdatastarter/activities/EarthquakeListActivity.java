@@ -75,13 +75,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Earthquake> earthquakes) {
                 adapter.setEarthquakes(earthquakes);
-                LocalDate localDate = LocalDate.of(2019, 03, 22);
-                LocalDate localDate2 = LocalDate.of(2019, 04, 1);
-                //List<Earthquake> quakes = viewModel.getEarthquakesByDate(localDate);
-                List<Earthquake> quakes2 = viewModel.getEarthquakesBetweenDates(localDate, localDate2);
-                //HashMap<String, Integer> map = viewModel.groupByHour();
-                HashMap<String, Integer> map = viewModel.groupByDay();
-                System.out.println("Qukess: " + quakes2);
             }
         });
     }
@@ -231,6 +224,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "onCreateOptionsMenu: creating the options menu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 

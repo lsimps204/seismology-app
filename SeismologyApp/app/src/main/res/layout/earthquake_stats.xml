@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Lyle Simpson-->
+<!--S1436436-->
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:title="Seismology App"
+        android:title="@string/app_name"
         android:titleTextColor="@color/common_google_signin_btn_text_dark_default"/>
 
     <TextView

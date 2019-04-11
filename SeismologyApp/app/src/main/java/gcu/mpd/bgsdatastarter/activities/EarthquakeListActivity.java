@@ -80,7 +80,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch(menuItem.getItemId()) {
                         case R.id.nav_list:
-//                            Intent i = new Intent(EarthquakeListActivity.this, EarthquakeListActivity.class);
                             break;
 
                         case R.id.nav_map:
@@ -88,12 +87,14 @@ public class EarthquakeListActivity extends AppCompatActivity {
                             startActivity(intent);
                             break;
 
-                        case R.id.nav_search:
+                        case R.id.nav_stats:
+                            Intent intent2 = new Intent(EarthquakeListActivity.this, EarthquakeStatisticsActivity.class);
+                            startActivity(intent2);
                             break;
 
                         case R.id.nav_graph:
-                            Intent intent4 = new Intent(EarthquakeListActivity.this, EarthquakeGraphActivity.class);
-                            startActivity(intent4);
+                            Intent intent3 = new Intent(EarthquakeListActivity.this, EarthquakeGraphActivity.class);
+                            startActivity(intent3);
                             break;
 
                         default:
@@ -152,6 +153,54 @@ public class EarthquakeListActivity extends AppCompatActivity {
             case R.id.action_alphabetical_rev:
                 Log.d(TAG, "onOptionsItemSelected: reverse alphabetical ordering by location chosen");
                 adapter.setEarthquakes(viewModel.orderByLocationReverse());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_highest_mag:
+                Log.d(TAG, "onOptionsItemSelected: highest magnitude ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByMagnitude());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_lowest_mag:
+                Log.d(TAG, "onOptionsItemSelected: lowest magnitude ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByMagnitudeReverse());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_highest_depth:
+                Log.d(TAG, "onOptionsItemSelected: highest depth ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByDepthReverse());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_lowest_depth:
+                Log.d(TAG, "onOptionsItemSelected: lowest depth ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByDepth());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_most_northern:
+                Log.d(TAG, "onOptionsItemSelected: most northern ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByMostNorthern());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_most_southern:
+                Log.d(TAG, "onOptionsItemSelected: most southern ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByMostSouthern());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_most_western:
+                Log.d(TAG, "onOptionsItemSelected: most western ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByMostWestern());
+                adapter.notifyDataSetChanged();
+                break;
+
+            case R.id.action_most_eastern:
+                Log.d(TAG, "onOptionsItemSelected: most eastern ordering chosen");
+                adapter.setEarthquakes(viewModel.orderByMostEastern());
                 adapter.notifyDataSetChanged();
                 break;
         }

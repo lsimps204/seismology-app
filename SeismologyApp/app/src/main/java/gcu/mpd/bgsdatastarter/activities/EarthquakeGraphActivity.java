@@ -21,7 +21,7 @@ public class EarthquakeGraphActivity extends AppCompatActivity {
         nav.setOnNavigationItemSelectedListener(navListener);
 
         Menu menu = nav.getMenu();
-        MenuItem mItem = menu.getItem(3);
+        MenuItem mItem = menu.getItem(2);
         mItem.setChecked(true);
 
     }
@@ -42,7 +42,9 @@ public class EarthquakeGraphActivity extends AppCompatActivity {
                             startActivity(intent2);
                             break;
 
-                        case R.id.nav_search:
+                        case R.id.nav_stats:
+                            Intent intent3 = new Intent(EarthquakeGraphActivity.this, EarthquakeStatisticsActivity.class);
+                            startActivity(intent3);
                             break;
 
                         case R.id.nav_graph:

@@ -24,6 +24,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
+import gcu.mpd.bgsdatastarter.models.EarthquakeStatisticsView;
 import gcu.mpd.bgsdatastarter.models.daos.EarthquakeDao;
 import gcu.mpd.bgsdatastarter.models.database.EarthquakeDatabase;
 import gcu.mpd.bgsdatastarter.network.EarthquakeXmlParser;
@@ -41,6 +42,14 @@ public class EarthquakeRepository {
         earthquakeDao = db.earthquakeDao();
     }
 
+    public int getEarthquakeCount() {
+        return this.allEarthquakes.getValue().size();
+    }
+
+    public List<Earthquake> getQuakesAsList(){
+        return this.allEarthquakes.getValue();
+    }
+
     // Retrieves all the earthquakes
     public LiveData<List<Earthquake>> getAllEarthquakes() {
         if (this.getCount() <= 0) {
@@ -48,6 +57,26 @@ public class EarthquakeRepository {
         }
         this.allEarthquakes = earthquakeDao.getAllEarthquakes();
         return this.allEarthquakes;
+    }
+
+    /* REMOTE DATA CALL */
+    // This method initiates the remote call to the API to fetch the data
+    // Uses the ExecutorService to run the callable WebService on a new Thread
+    public void fetchRemoteData() {
+        Log.e(MYTAG, "Fetching data from the remote API");
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        WebService ws = new WebService();
+        Future<String> future = service.submit(ws);
+        try {
+            String result = future.get();
+            EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
+            List<Earthquake> quakes = xmlParser.getEarthquakes();
+            this.insertEarthquakes(quakes);
+        } catch (Exception e) {
+            Log.e("EarthquakeRepository", e.toString());
+        } finally {
+            service.shutdown();
+        }
     }
 
     /* Ordering methods */
@@ -60,6 +89,30 @@ public class EarthquakeRepository {
     public List<Earthquake> orderByLocation() {
         List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
         Collections.sort(copy, locationAscendingComparator);
+        return copy;
+    }
+
+    public List<Earthquake> orderByMagnitude() {
+        List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
+        Collections.sort(copy, magnitudeAscendingComparator);
+        return copy;
+    }
+
+    public List<Earthquake> orderByDepth() {
+        List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
+        Collections.sort(copy, depthAscendingComparator);
+        return copy;
+    }
+
+    public List<Earthquake> orderByMostNorthern() {
+        List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
+        Collections.sort(copy, mostNorthernComparator);
+        return copy;
+    }
+
+    public List<Earthquake> orderByMostWestern() {
+        List<Earthquake> copy = new ArrayList<>(this.allEarthquakes.getValue());
+        Collections.sort(copy, mostWesternComparator);
         return copy;
     }
 
@@ -92,15 +145,7 @@ public class EarthquakeRepository {
     }
 
     public Earthquake getHighestMagnitude() {
-        Comparator<Earthquake> cmp = new Comparator<Earthquake>() {
-            @Override
-            public int compare(Earthquake e1, Earthquake e2) {
-                Float mag1 = e1.getMagnitude();
-                Float mag2 = e2.getMagnitude();
-                return mag1.compareTo(mag2);
-            }
-        };
-        return Collections.max(this.allEarthquakes.getValue(), cmp);
+        return Collections.max(this.allEarthquakes.getValue(), magnitudeAscendingComparator);
     }
 
     public List<Earthquake> getEarthquakesByMagnitudeAbove(float magnitude) {
@@ -137,22 +182,13 @@ public class EarthquakeRepository {
     }
 
     public Earthquake getDeepestQuake() {
-        Comparator<Earthquake> cmp = new Comparator<Earthquake>() {
-            @Override
-            public int compare(Earthquake e1, Earthquake e2) {
-                Integer mag1 = e1.getDepth();
-                Integer mag2 = e2.getDepth();
-                return mag1.compareTo(mag2);
-            }
-        };
-        return Collections.max(this.allEarthquakes.getValue(), cmp);
+        return Collections.max(this.allEarthquakes.getValue(), depthAscendingComparator);
     }
 
     public Map.Entry<String, List<Earthquake>> getDayWithMostQuakes() {
         HashMap<String, List<Earthquake>> groupedQuakes = this.groupEarthquakesByDate();
         return this.findMostCommon(groupedQuakes);
     }
-
 
     public Map.Entry<String, List<Earthquake>> getCountyWithMostQuakes() {
         HashMap<String, List<Earthquake>> groupedQuakes = this.groupEarthquakesByCounty();
@@ -197,6 +233,16 @@ public class EarthquakeRepository {
         return countPerHour;
     }
 
+    public Map.Entry<String, Integer> hourWithMostQuakes() {
+        Map.Entry<String, Integer> maxEntry = null;
+        for (Map.Entry<String, Integer> entry : earthquakesPerHour().entrySet()) {
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                maxEntry = entry;
+            }
+        }
+        return maxEntry;
+    }
+
     public HashMap<String, Integer> earthquakesPerDay() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         HashMap<String, Integer> countPerDay = new HashMap<>();
@@ -229,25 +275,6 @@ public class EarthquakeRepository {
             return (new countAsyncTask(earthquakeDao).execute().get());
         } catch(Exception e) {
             return -1;
-        }
-    }
-
-    // This method initiates the remote call to the API to fetch the data
-    // Uses the ExecutorService to run the callable WebService on a new Thread
-    public void fetchRemoteData() {
-        Log.e(MYTAG, "Fetching data from the remote API");
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        WebService ws = new WebService();
-        Future<String> future = service.submit(ws);
-        try {
-            String result = future.get();
-            EarthquakeXmlParser xmlParser = new EarthquakeXmlParser(result);
-            List<Earthquake> quakes = xmlParser.getEarthquakes();
-            this.insertEarthquakes(quakes);
-        } catch (Exception e) {
-            Log.e("EarthquakeRepository", e.toString());
-        } finally {
-            service.shutdown();
         }
     }
 
@@ -325,4 +352,39 @@ public class EarthquakeRepository {
         }
     };
 
+    Comparator<Earthquake> magnitudeAscendingComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake e1, Earthquake e2) {
+            Float mag1 = e1.getMagnitude();
+            Float mag2 = e2.getMagnitude();
+            return mag1.compareTo(mag2);
+        }
+    };
+
+    Comparator<Earthquake> depthAscendingComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake e1, Earthquake e2) {
+            Integer mag1 = e1.getDepth();
+            Integer mag2 = e2.getDepth();
+            return mag1.compareTo(mag2);
+        }
+    };
+
+    Comparator<Earthquake> mostNorthernComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake e1, Earthquake e2) {
+            Float latitude1 = e1.getLocation().getCoordinates().getLat();
+            Float latitude2 = e2.getLocation().getCoordinates().getLat();
+            return latitude2.compareTo(latitude1);
+        }
+    };
+
+    Comparator<Earthquake> mostWesternComparator = new Comparator<Earthquake>() {
+        @Override
+        public int compare(Earthquake e1, Earthquake e2) {
+            Float longitude1 = e1.getLocation().getCoordinates().getLon();
+            Float longitude2 = e2.getLocation().getCoordinates().getLon();
+            return longitude1.compareTo(longitude2);
+        }
+    };
 }

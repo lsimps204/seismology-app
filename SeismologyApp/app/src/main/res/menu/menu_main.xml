@@ -59,6 +59,71 @@
                         </group>
                     </menu>
                 </item>
+
+                <item
+                    android:id="@+id/action_magnitude"
+                    android:orderInCategory="6"
+                    android:title="Sort by Magnitude"
+                    app:showAsAction="collapseActionView">
+                    <menu>
+                        <group>
+                            <item
+                                android:id="@+id/action_highest_mag"
+                                android:title="Highest-Lowest">
+
+                            </item>
+                            <item
+                                android:id="@+id/action_lowest_mag"
+                                android:title="Lowest-Highest"></item>
+                        </group>
+                    </menu>
+                </item>
+
+                <item
+                    android:id="@+id/action_depth"
+                    android:orderInCategory="7"
+                    android:title="Sort by Depth"
+                    app:showAsAction="collapseActionView">
+                    <menu>
+                        <group>
+                            <item
+                                android:id="@+id/action_highest_depth"
+                                android:title="Highest-Lowest">
+
+                            </item>
+                            <item
+                                android:id="@+id/action_lowest_depth"
+                                android:title="Lowest-Highest"></item>
+                        </group>
+                    </menu>
+                </item>
+
+                <item
+                    android:id="@+id/action_coordinates"
+                    android:orderInCategory="8"
+                    android:title="Sort by Position"
+                    app:showAsAction="collapseActionView">
+                    <menu>
+                        <group>
+                            <item
+                                android:id="@+id/action_most_northern"
+                                android:title="Most Northern">
+
+                            </item>
+                            <item
+                                android:id="@+id/action_most_southern"
+                                android:title="Most Southern"></item>
+
+                            <item
+                                android:id="@+id/action_most_western"
+                                android:title="Most Western"></item>
+
+                            <item
+                                android:id="@+id/action_most_eastern"
+                                android:title="Most Eastern"></item>
+                        </group>
+                    </menu>
+                </item>
             </group>
         </menu>
         </item>

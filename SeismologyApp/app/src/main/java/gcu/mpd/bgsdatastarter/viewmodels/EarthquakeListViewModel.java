@@ -11,8 +11,10 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import gcu.mpd.bgsdatastarter.models.Earthquake;
+import gcu.mpd.bgsdatastarter.models.EarthquakeStatisticsView;
 import gcu.mpd.bgsdatastarter.repositories.EarthquakeRepository;
 
 public class EarthquakeListViewModel extends AndroidViewModel {
@@ -60,6 +62,49 @@ public class EarthquakeListViewModel extends AndroidViewModel {
         return quakesOrdered;
     }
 
+    /* Magnitude ordering methods */
+    public List<Earthquake> orderByMagnitude() {
+        List<Earthquake> quakesOrdered = repository.orderByMagnitude();
+        Collections.reverse(quakesOrdered);
+        return quakesOrdered;
+    }
+
+    public List<Earthquake> orderByMagnitudeReverse() {
+        return repository.orderByMagnitude();
+    }
+
+    /* Depth ordering */
+    public List<Earthquake> orderByDepth() {
+        return repository.orderByDepth();
+    }
+
+    public List<Earthquake> orderByDepthReverse() {
+        List<Earthquake> quakesOrdered = repository.orderByDepth();
+        Collections.reverse(quakesOrdered);
+        return quakesOrdered;
+    }
+
+    /* Coordinate ordering */
+    public List<Earthquake> orderByMostNorthern() {
+        return repository.orderByMostNorthern();
+    }
+
+    public List<Earthquake> orderByMostSouthern() {
+        List<Earthquake> quakesOrdered = repository.orderByMostNorthern();
+        Collections.reverse(quakesOrdered);
+        return quakesOrdered;
+    }
+
+    public List<Earthquake> orderByMostWestern(){
+        return repository.orderByMostWestern();
+    }
+
+    public List<Earthquake> orderByMostEastern(){
+        List<Earthquake> quakesOrdered = repository.orderByMostWestern();
+        Collections.reverse(quakesOrdered);
+        return quakesOrdered;
+    }
+
     public Earthquake getHighestMagn(){
         return repository.getHighestMagnitude();
     }
@@ -75,11 +120,25 @@ public class EarthquakeListViewModel extends AndroidViewModel {
     public void deleteAll() {
         repository.deleteAllEarthquakes();
     }
-//    public int getNumberEntities() {
-//        return earthquakes.getValue().size();
-//    }
 
     public int getCount() {
         return repository.getCount();
     }
+
+    public int deepestQuake() {
+        return repository.getDeepestQuake().getDepth();
+    }
+
+    public String highestMag() {
+        return Float.toString(repository.getHighestMagnitude().getMagnitude());
+    }
+
+    public Map.Entry<String, List<Earthquake>> dateMost() {
+        return repository.getDayWithMostQuakes();
+    }
+
+    public Map.Entry<String, List<Earthquake>> countyMost() {
+        return repository.getCountyWithMostQuakes();
+    }
+
 }

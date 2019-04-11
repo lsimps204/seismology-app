@@ -35,6 +35,7 @@
         <activity android:name=".activities.EarthquakeMapActivity"></activity>
         <activity android:name=".activities.EarthquakeDetailActivity"></activity>
         <activity android:name=".activities.EarthquakeGraphActivity"></activity>
+        <activity android:name=".activities.EarthquakeStatisticsActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBfpQw-NxfQjVv--Jpx8ZeoDQ4oyjiQ0VU"/>

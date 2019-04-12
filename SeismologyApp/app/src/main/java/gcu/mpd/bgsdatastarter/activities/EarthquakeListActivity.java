@@ -87,7 +87,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
     /* This function refreshes the API data every five minutes */
     private void setTimer() {
         Timer timer = new Timer();
-        int FIVEMINS = 1000 * 60;
+        int FIVEMINS = 1000 * 60 * 5;
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

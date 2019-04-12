@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import gcu.mpd.bgsdatastarter.R;
 import gcu.mpd.bgsdatastarter.adapters.EarthquakesAdapter;
@@ -77,6 +79,21 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 adapter.setEarthquakes(earthquakes);
             }
         });
+
+        // instantiate the automatic refresh every 5 minutes
+        setTimer();
+    }
+
+    /* This function refreshes the API data every five minutes */
+    private void setTimer() {
+        Timer timer = new Timer();
+        int FIVEMINS = 1000 * 60;
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                viewModel.refreshData();
+            }
+        }, 0,FIVEMINS);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

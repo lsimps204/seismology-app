@@ -61,10 +61,11 @@
                 android:textAlignment="viewStart"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:textColor="@color/mag1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="parent"
                 tools:text="@string/earthquake_location"
-                tools:textColor="@color/mag2"/>
+                tools:textColor="@color/mag1"/>
 
             <TextView
                 android:id="@+id/tvPubDate"

@@ -12,10 +12,6 @@
         android:icon="@drawable/ic_map"
         android:title="Map"></item>
 
-    <item android:id="@+id/nav_graph"
-        android:icon="@drawable/ic_show_chart"
-        android:title="Chart"></item>
-
     <item android:id="@+id/nav_stats"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="Statistics"></item>

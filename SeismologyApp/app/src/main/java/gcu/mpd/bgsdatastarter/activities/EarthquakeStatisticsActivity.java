@@ -52,7 +52,7 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
         nav.setOnNavigationItemSelectedListener(navListener);
 
         Menu menu = nav.getMenu();
-        MenuItem mItem = menu.getItem(3);
+        MenuItem mItem = menu.getItem(2);
         mItem.setChecked(true);
 
         tvCount = findViewById(R.id.stat_quakecount);
@@ -117,12 +117,6 @@ public class EarthquakeStatisticsActivity extends AppCompatActivity {
 
                         case R.id.nav_stats:
                             break;
-
-                        case R.id.nav_graph:
-                            Intent intent3 = new Intent(EarthquakeStatisticsActivity.this, EarthquakeGraphActivity.class);
-                            startActivity(intent3);
-                            break;
-
                     }
 
                     return false;

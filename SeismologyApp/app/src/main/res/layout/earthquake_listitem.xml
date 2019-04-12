@@ -30,7 +30,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginStart="20dp"
         >
 
@@ -43,7 +43,7 @@
             android:maxLines="1"
             android:textAllCaps="true"
             android:textColor="@color/textColorEarthquakeDetails"
-            android:textSize="12sp"
+            android:textSize="14sp"
             tools:text="30km S of" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/textColorEarthquakeLocation"
-            android:textSize="16sp"
+            android:textSize="18sp"
             tools:text="Long placeholder location that should wrap to more than 2 lines of text" />/>
 
     </LinearLayout>

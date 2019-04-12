@@ -19,6 +19,10 @@ import gcu.mpd.bgsdatastarter.R;
  * 2019 April 11
  */
 
+/* The intent of this class was to show bar charts, line graphs and histograms of the earthquake activity.
+ * EX: a histogram of earthquakes per month, line graph of earthquake frequency, etc
+ * Due to time constraints, these were not implemented.
+ */
 public class EarthquakeGraphActivity extends AppCompatActivity {
 
     @Override
@@ -30,8 +34,8 @@ public class EarthquakeGraphActivity extends AppCompatActivity {
         nav.setOnNavigationItemSelectedListener(navListener);
 
         Menu menu = nav.getMenu();
-        MenuItem mItem = menu.getItem(2);
-        mItem.setChecked(true);
+//        MenuItem mItem = menu.getItem(2);
+//        mItem.setChecked(true);
 
     }
 
@@ -55,14 +59,7 @@ public class EarthquakeGraphActivity extends AppCompatActivity {
                             Intent intent3 = new Intent(EarthquakeGraphActivity.this, EarthquakeStatisticsActivity.class);
                             startActivity(intent3);
                             break;
-
-                        case R.id.nav_graph:
-                            break;
-
-                        default:
-                            break;
                     }
-
                     return false;
                 }
             };

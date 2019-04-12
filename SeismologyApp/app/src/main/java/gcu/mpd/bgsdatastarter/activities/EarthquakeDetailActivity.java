@@ -130,14 +130,6 @@ public class EarthquakeDetailActivity extends AppCompatActivity implements OnMap
                             Intent intent3 = new Intent(EarthquakeDetailActivity.this, EarthquakeStatisticsActivity.class);
                             startActivity(intent3);
                             break;
-
-                        case R.id.nav_graph:
-                            Intent intent4 = new Intent(EarthquakeDetailActivity.this, EarthquakeGraphActivity.class);
-                            startActivity(intent4);
-                            break;
-
-                        default:
-                            break;
                     }
 
                     return false;

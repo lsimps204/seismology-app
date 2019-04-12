@@ -96,14 +96,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
                             Intent intent2 = new Intent(EarthquakeListActivity.this, EarthquakeStatisticsActivity.class);
                             startActivity(intent2);
                             break;
-
-                        case R.id.nav_graph:
-                            Intent intent3 = new Intent(EarthquakeListActivity.this, EarthquakeGraphActivity.class);
-                            startActivity(intent3);
-                            break;
-
-                        default:
-                            break;
                     }
 
                     return false;
@@ -111,7 +103,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             };
 
     public void filterDate(int year, int month, int day) {
-        Log.d(TAG, "filterDate: "+day+" "+month+" "+year);
+        Log.d(TAG, "filterDate: filtering the date on: "+day+" "+month+" "+year);
         LocalDate date = LocalDate.of(year, month+1, day);
         String dateAsString = date.format(DateTimeFormatter.ofPattern("d MMMM, y"));
         List<Earthquake> quakes = viewModel.getEarthquakesByDate(date);
